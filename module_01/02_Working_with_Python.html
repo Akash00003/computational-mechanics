@@ -899,7 +899,7 @@ you can do more computations, like add or multiply them. For example:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_1689/2664324349.py:1: RuntimeWarning: invalid value encountered in true_divide
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_1973/2664324349.py:1: RuntimeWarning: invalid value encountered in true_divide
   x_array / y_array
 </pre></div>
 </div>
@@ -1261,8 +1261,8 @@ with no numbers repeated.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[3, 65, 93, 77, 32, 68, 39, 75, 43, 14]
-[89, 90, 56, 20, 26, 52, 16, 30, 63, 49]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[91, 65, 49, 92, 71, 85, 99, 56, 51, 68]
+[78, 59, 60, 7, 1, 92, 42, 52, 35, 86]
 </pre></div>
 </div>
 </div>
@@ -1282,8 +1282,10 @@ takes to execute all the code in that cell.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 22 µs, sys: 4 µs, total: 26 µs
-Wall time: 47 µs
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 30 µs, sys: 0 ns, total: 30 µs
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Wall time: 33.1 µs
 </pre></div>
 </div>
 </div>
@@ -1295,7 +1297,7 @@ Wall time: 47 µs
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[92, 155, 149, 97, 58, 120, 55, 105, 106, 63]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[169, 124, 109, 99, 72, 177, 141, 108, 86, 154]
 </pre></div>
 </div>
 </div>
@@ -1329,8 +1331,8 @@ that the arrays and the lists are of the same length and type
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[91  0 72 78 99 63 42 69 67 46]
-[54 20 28 94 80 17 10 17 32 11]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[15 72 86 74 63 35 31 91 95 80]
+[ 8 49 35 78 36 63 22  7 68 31]
 </pre></div>
 </div>
 </div>
@@ -1344,8 +1346,8 @@ that the arrays and the lists are of the same length and type
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 10 µs, sys: 2 µs, total: 12 µs
-Wall time: 15.3 µs
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 13 µs, sys: 0 ns, total: 13 µs
+Wall time: 15.7 µs
 </pre></div>
 </div>
 </div>
@@ -1429,7 +1431,7 @@ in the x-axis, you need to import the module <code class="docutils literal notra
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f1addda8940&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f548fb286d0&gt;
 </pre></div>
 </div>
 <img alt="../_images/02_Working_with_Python_104_1.png" src="../_images/02_Working_with_Python_104_1.png" />
@@ -1514,6 +1516,17 @@ of the two indices from 0 to 9 e.g. A_99[3,2]=6 and A_99[4,4]=16.</p>
 <ol class="simple">
 <li><p>The following linear interpolation function has an error. It is supposed to return y(x) given the the two points <span class="math notranslate nohighlight">\(p_1=[x_1,~y_1]\)</span> and <span class="math notranslate nohighlight">\(p_2=[x_2,~y_2]\)</span>. Currently, it just returns and error.</p></li>
 </ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">linInterp</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">p1</span><span class="p">,</span><span class="n">p2</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;linear interplation function</span>
+<span class="sd">    return y(x) given the two endpoints </span>
+<span class="sd">    p1=np.array([x1,y1])</span>
+<span class="sd">    and</span>
+<span class="sd">    p2=np.array([x2,y2])&#39;&#39;&#39;</span>
+    <span class="n">slope</span> <span class="o">=</span> <span class="p">(</span><span class="n">p2</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">-</span><span class="n">p1</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span><span class="o">/</span><span class="p">(</span><span class="n">p2</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">p1</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    
+    <span class="k">return</span> <span class="n">p1</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">+</span><span class="n">slope</span><span class="o">*</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">p1</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
 </div>
 
     <script type="text/x-thebe-config">
