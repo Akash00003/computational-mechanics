@@ -1005,8 +1005,8 @@ Here, consider the speed from 0 to 2 seconds, so <code class="docutils literal n
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 257 µs, sys: 35 µs, total: 292 µs
-Wall time: 252 µs
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 266 µs, sys: 28 µs, total: 294 µs
+Wall time: 270 µs
 </pre></div>
 </div>
 </div>
@@ -1038,7 +1038,7 @@ Wall time: 252 µs
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fc9973430d0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fafe69a34f0&gt;
 </pre></div>
 </div>
 <img alt="../_images/03_Numerical_error_44_1.png" src="../_images/03_Numerical_error_44_1.png" />
@@ -1149,14 +1149,60 @@ models assumes that the rate of change of the population p is proportional to th
 <span class="n">year</span><span class="p">,</span> <span class="n">pop</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="s1">&#39;../data/world_population_1900-2020.csv&#39;</span><span class="p">,</span><span class="n">skiprows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">,</span><span class="n">unpack</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;years=&#39;</span><span class="p">,</span><span class="n">year</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;population =&#39;</span><span class="p">,</span> <span class="n">pop</span><span class="p">)</span>
+
+<span class="c1">#A. </span>
+<span class="n">dpdt1</span> <span class="o">=</span> <span class="p">(</span><span class="n">pop</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">pop</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">/</span><span class="mi">50</span>
+<span class="n">dpdt2</span> <span class="o">=</span> <span class="p">(</span><span class="n">pop</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">-</span><span class="n">pop</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">/</span><span class="mi">50</span>
+<span class="n">dpdt3</span> <span class="o">=</span> <span class="p">(</span><span class="n">pop</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">-</span><span class="n">pop</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span><span class="o">/</span><span class="mi">20</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;avg pop growth 1900-1950: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">dpdt1</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;avg pop growth 1950-2000: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">dpdt2</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;avg pop growth 2000-2020: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">dpdt3</span><span class="p">))</span>
+
+<span class="c1">#B.</span>
+<span class="n">kg1</span> <span class="o">=</span> <span class="n">dpdt1</span><span class="o">/</span><span class="n">pop</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">kg2</span> <span class="o">=</span> <span class="n">dpdt2</span><span class="o">/</span><span class="n">pop</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">kg3</span> <span class="o">=</span> <span class="n">dpdt3</span><span class="o">/</span><span class="n">pop</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;kg 1900-1950: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">kg1</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;kg 1950-2000: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">kg2</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;kg 2000-2020: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">kg3</span><span class="p">))</span>
+
+<span class="c1">#C.</span>
+<span class="n">yearsAnalytical</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1900</span><span class="p">]</span>
+<span class="n">popAnalytical</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1578000000</span><span class="p">]</span>
+<span class="n">kgA</span> <span class="o">=</span> <span class="mf">0.013</span>
+<span class="n">timestep</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">):</span>
+    <span class="n">yearsAnalytical</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">yearsAnalytical</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">+</span><span class="n">timestep</span><span class="p">)</span>
+    <span class="n">popAnalytical</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">popAnalytical</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">kgA</span><span class="o">*</span><span class="n">timestep</span><span class="p">))</span>
+
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">year</span><span class="p">,</span><span class="n">pop</span><span class="p">,</span><span class="s1">&#39;o&#39;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Numerical&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">yearsAnalytical</span><span class="p">,</span><span class="n">popAnalytical</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;analytical&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Population Growth&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Year&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Population&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+<span class="c1">#D. It would because it would become more accurate with the smaller intervals</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>years= [1900. 1950. 2000. 2020.]
 population = [1.578000e+09 2.526000e+09 6.127000e+09 7.795482e+09]
+avg pop growth 1900-1950: 18960000.0
+avg pop growth 1950-2000: 72020000.0
+avg pop growth 2000-2020: 83424100.0
+kg 1900-1950: 0.0075059382422802854
+kg 1950-2000: 0.011754529133344214
+kg 2000-2020: 0.010701596129655613
 </pre></div>
 </div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fafe8dcf130&gt;
+</pre></div>
+</div>
+<img alt="../_images/03_Numerical_error_52_2.png" src="../_images/03_Numerical_error_52_2.png" />
 </div>
 </div>
 <p><strong>d.</strong> As the number of time steps increases, the Euler approximation approaches the analytical solution, not the measured data. The best-case scenario is that the Euler solution is the same as the analytical solution.</p>
@@ -1172,6 +1218,8 @@ population = [1.578000e+09 2.526000e+09 6.127000e+09 7.795482e+09]
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">factorial</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">time</span>
 <span class="k">def</span> <span class="nf">exptaylor</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">n</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;Taylor series expansion about x=0 for the function e^x</span>
 <span class="sd">    the full expansion follows the function</span>
@@ -1184,7 +1232,39 @@ population = [1.578000e+09 2.526000e+09 6.127000e+09 7.795482e+09]
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="p">):</span>
             <span class="n">ex</span><span class="o">+=</span><span class="n">x</span><span class="o">**</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="n">factorial</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># add the nth-order result for each step in loop</span>
         <span class="k">return</span> <span class="n">ex</span>
-        
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;A. &quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">abs</span><span class="p">((</span><span class="n">exptaylor</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">% r</span><span class="s1">elative error&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;B. &quot;</span><span class="p">)</span>
+<span class="n">order</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">10</span><span class="p">]</span>
+<span class="n">timelist</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">exptaylor</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">runtime</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="o">-</span><span class="n">start</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Total time for 2nd order &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">runtime</span><span class="p">))</span>
+<span class="n">timelist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">runtime</span><span class="p">)</span>
+
+<span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">exptaylor</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">runtime</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="o">-</span><span class="n">start</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Total time for 10th order &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">runtime</span><span class="p">))</span>
+<span class="n">timelist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">runtime</span><span class="p">)</span>
+
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;C. &quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">interp</span><span class="p">(</span><span class="mi">100000</span><span class="p">,</span><span class="n">order</span><span class="p">,</span><span class="n">timelist</span><span class="p">),</span> <span class="s2">&quot;s for 100,000th order approx&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>A. 
+8.030139707139416 % relative error
+B. 
+Total time for 2nd order 8.320808410644531e-05
+Total time for 10th order 7.43865966796875e-05
+C. 
+7.43865966796875e-05 s for 100,000th order approx
 </pre></div>
 </div>
 </div>

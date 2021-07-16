@@ -4,8 +4,8 @@ jupytext:
   text_representation:
     extension: .md
     format_name: myst
-    format_version: 0.13
-    jupytext_version: 1.10.3
+    format_version: 0.12
+    jupytext_version: 1.6.0
 kernelspec:
   display_name: Python 3
   language: python
@@ -33,7 +33,6 @@ Acceleration of the object:
 
 $\sum F=ma=F_g-F_d=mg - cv^2 = m\frac{dv}{dt}$
 
-
 +++
 
 ### Define constants and analytical solution (meters-kilogram-sec)
@@ -58,7 +57,7 @@ $v_{terminal}=\sqrt{\frac{mg}{c}}$
 
 Now, substitute this terminal velocity into the equation and integrate to get the analytical solution v(t):
 
-$v(t)=v_{terminal}\tanh{\left(\frac{gt}{v_{terminal}}\right)}$. 
+$v(t)=v_{terminal}\tanh{\left(\frac{gt}{v_{terminal}}\right)}$.
 
 ```{code-cell} ipython3
 import numpy as np
@@ -189,7 +188,7 @@ for i in range(1,len(t)):
 v_numerical
 ```
 
-Let's print the time, velocity (analytical) and velocity (numerical) to compare the results in a table. We'll use the `print` and `format` commands to look at the results. 
+Let's print the time, velocity (analytical) and velocity (numerical) to compare the results in a table. We'll use the `print` and `format` commands to look at the results.
 
 ```{code-cell} ipython3
 print('time (s)|vel analytical (m/s)|vel numerical (m/s)')
@@ -246,7 +245,7 @@ What happens when you decrease the number of time steps?
 ## Errors in Numerical Modeling
 
 ## 1 - Truncation
-## 2 - Roundoff  
+## 2 - Roundoff
 
 +++
 
@@ -293,7 +292,7 @@ In the .gif below, the error in the function is reduced by including higher-orde
 ![3](https://media.giphy.com/media/xA7G2n20MzTOw/giphy.gif)
 
 $n^{th}$-order approximation equivalent to 
-an $n^{th}$-order polynomial. 
+an $n^{th}$-order polynomial.
 
 +++
 
@@ -347,7 +346,7 @@ Consider $\pi$ again, but this time you will use a for loop to multiply
 $\pi$ by a 1e-16 then divide by 1e-16, then multiply by 2e-16 and divide
 by 2e-16, and so on until you reach 10e-16. If we do these calculations
 by hand, we see that each step in the for loop returns $\pi$, but due to
-floating point arithmetic errors we accumulate some error. 
+floating point arithmetic errors we accumulate some error.
 
 ```{code-cell} ipython3
 double=np.array([pi],dtype='float64')
@@ -513,7 +512,7 @@ def freefall(N):
 
 We can visualize how the approximation approaches the exact solution with this method. The process of approaching the "true" solution is called **convergence**. 
 
-First, solve for `n=2` steps, so t=[0,2]. We can time the solution to get a sense of how long the computation will take for larger values of `n`. 
+First, solve for `n=2` steps, so t=[0,2]. We can time the solution to get a sense of how long the computation will take for larger values of `n`.
 
 ```{code-cell} ipython3
 %%time
@@ -530,7 +529,7 @@ The block of code above assigned three variables from the function `freefall`.
 
 3. `t` = timesteps from 0..2 with `n` values, here t=np.array([0,2])
 
-All three variables have the same length, so you can plot them and visually compare `v_analytical` and `v_numerical`. This is the comparison method (1) from above. 
+All three variables have the same length, so you can plot them and visually compare `v_analytical` and `v_numerical`. This is the comparison method (1) from above.
 
 ```{code-cell} ipython3
 import matplotlib.pyplot as plt
@@ -548,7 +547,7 @@ plt.legend()
 
 ### Exercise
 
-Try adjusting `n` in the code above to watch the solution converge. You should notice the Euler approximation becomes almost indistinguishable from the analytical solution as `n` increases. 
+Try adjusting `n` in the code above to watch the solution converge. You should notice the Euler approximation becomes almost indistinguishable from the analytical solution as `n` increases.
 
 +++
 
@@ -562,7 +561,7 @@ numerical result is saved as a 32-bit floating point array. The best analytical 
 
 In the next plot, you consider the relative error for the velocity at t=2 s, as a function of `N`. 
 
-$^+$ Note: In practice, there is no reason to restrict the precision of floating point numbers. The function was written this way to highlight the effect of roundoff error without significant computational resources. You would need more timesteps to observe floating point error with 64-bit floating point numbers. 
+$^+$ Note: In practice, there is no reason to restrict the precision of floating point numbers. The function was written this way to highlight the effect of roundoff error without significant computational resources. You would need more timesteps to observe floating point error with 64-bit floating point numbers.
 
 ```{code-cell} ipython3
 n = np.arange(500, 100000, 500) # create an array from 10^1 to 10^3 with N values
@@ -588,7 +587,7 @@ plot", you see that around $N=10^4$ steps you stop decreasing the error
 with more steps. This is because we are approaching the limit of how
 precise we can store a number using a 32-bit floating point number. 
 
-In any computational solution, there will be some point of similar diminishing in terms of accuracy (error) and computational time (in this case, number of timesteps). If you were to attempt a solution for N=1 billion, the solution could take $\approx$(1 billion)(200 $\mu s$\[cpu time for N=5\])$\approx$ 55 hours, but would not increase the accuracy of the solution. 
+In any computational solution, there will be some point of similar diminishing in terms of accuracy (error) and computational time (in this case, number of timesteps). If you were to attempt a solution for N=1 billion, the solution could take $\approx$(1 billion)(200 $\mu s$\[cpu time for N=5\])$\approx$ 55 hours, but would not increase the accuracy of the solution.
 
 +++
 
@@ -637,9 +636,45 @@ import numpy as np
 year, pop = np.loadtxt('../data/world_population_1900-2020.csv',skiprows=1,delimiter=',',unpack=True)
 print('years=',year)
 print('population =', pop)
+
+#A. 
+dpdt1 = (pop[1]-pop[0])/50
+dpdt2 = (pop[2]-pop[1])/50
+dpdt3 = (pop[3]-pop[2])/20
+print("avg pop growth 1900-1950: " + str(dpdt1))
+print("avg pop growth 1950-2000: " + str(dpdt2))
+print("avg pop growth 2000-2020: " + str(dpdt3))
+
+#B.
+kg1 = dpdt1/pop[1]
+kg2 = dpdt2/pop[2]
+kg3 = dpdt3/pop[3]
+print("kg 1900-1950: " + str(kg1))
+print("kg 1950-2000: " + str(kg2))
+print("kg 2000-2020: " + str(kg3))
+
+#C.
+yearsAnalytical = [1900]
+popAnalytical = [1578000000]
+kgA = 0.013
+timestep = 20
+for i in range(6):
+    yearsAnalytical.append(yearsAnalytical[i]+timestep)
+    popAnalytical.append(popAnalytical[i]/(1-kgA*timestep))
+
+import matplotlib.pyplot as plt
+%matplotlib inline
+plt.plot(year,pop,'o',label='Numerical')
+plt.plot(yearsAnalytical,popAnalytical,label='analytical')
+plt.title('Population Growth')
+plt.xlabel('Year')
+plt.ylabel('Population')
+plt.legend()
+
+#D. It would because it would become more accurate with the smaller intervals
 ```
 
-__d.__ As the number of time steps increases, the Euler approximation approaches the analytical solution, not the measured data. The best-case scenario is that the Euler solution is the same as the analytical solution. 
+__d.__ As the number of time steps increases, the Euler approximation approaches the analytical solution, not the measured data. The best-case scenario is that the Euler solution is the same as the analytical solution.
 
 +++
 
@@ -657,6 +692,8 @@ __d.__ As the number of time steps increases, the Euler approximation approaches
 
 ```{code-cell} ipython3
 from math import factorial
+import numpy as np
+import time
 def exptaylor(x,n):
     '''Taylor series expansion about x=0 for the function e^x
     the full expansion follows the function
@@ -669,7 +706,32 @@ def exptaylor(x,n):
         for i in range(1,n):
             ex+=x**(i+1)/factorial(i+1) # add the nth-order result for each step in loop
         return ex
-        
+print("A. ")
+print(abs((exptaylor(1,2)-np.exp(1))/np.exp(1))*100, '% relative error')
+
+print("B. ")
+order = [2,10]
+timelist = []
+
+start = time.time()
+exptaylor(1,2)
+runtime = time.time()-start
+print("Total time for 2nd order " + str(runtime))
+timelist.append(runtime)
+
+start = time.time()
+exptaylor(1,10)
+runtime = time.time()-start
+print("Total time for 10th order " + str(runtime))
+timelist.append(runtime)
+
+
+print("C. ")
+print(np.interp(100000,order,timelist), "s for 100,000th order approx")
+```
+
+```{code-cell} ipython3
+
 ```
 
 ```{code-cell} ipython3
