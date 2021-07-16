@@ -578,7 +578,11 @@ Throughout this course module, you will be drawing from the following references
     c. What is the result of the following logical operation, `volume>1000` (in inches^3)
 
 ```{code-cell} ipython3
-
+volume = 12.5*11*14
+density = volume/31
+print('A. volume is ' + str(volume))
+print('B. density is ' + str(density))
+print('C. volume > 1000 is ' + str(volume > 1000))
 ```
 
 2. Use the variables given below, `str1` and `str2`, and check the following 
@@ -594,6 +598,11 @@ Throughout this course module, you will be drawing from the following references
 ```{code-cell} ipython3
 str1 = 'Python'
 str2 = 'python'
+print('A. ' + str(str1 < str2))
+print('B. ' + str(str1 == str2))
+print('C. ' + str(str1 > str2))
+
+print(str1.lower() == str2)
 ```
 
 3. The following code has an error, fix the error so that the correct result is returned:
@@ -611,7 +620,13 @@ else:
 ```
 
 ```{code-cell} ipython3
+x="1"
+y=20
 
+if int(x)<y and y==20:
+    print('y is 20 and x is less than y')
+else:
+    print('x is not less than y')
 ```
 
 4. Create a script that takes the clock hour in 24 hours and prints the clock hour with am or pm. 
@@ -619,11 +634,11 @@ else:
     Hint: Use an if-else statement with `print` commands
 
 ```{code-cell} ipython3
-time = 22
-if time > 12:
-    print(time - 12, 'PM')
-elif time < 12:
+time = 16
+if time < 12:
     print(time, 'AM')
+else:
+    print(time-12, 'PM')
 ```
 
 ```{code-cell} ipython3
