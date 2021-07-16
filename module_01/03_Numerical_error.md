@@ -614,7 +614,6 @@ where $t$ is time in years, and $k_g$ is growth rate in \[1/years\].
 
 The world population has been increasing dramatically, let's make a prediction based upon the [following data](https://worldpopulationhistory.org/map/2020/mercator/1/0/25/) saved in [world_population_1900-2020.csv](../data/world_population_1900-2020.csv):
 
-
 |year| world population |
 |---|---|
 |1900|1,578,000,000|
@@ -637,18 +636,45 @@ import numpy as np
 year, pop = np.loadtxt('../data/world_population_1900-2020.csv',skiprows=1,delimiter=',',unpack=True)
 print('years=',year)
 print('population =', pop)
-```
 
+#A. 
+dpdt1 = (pop[1]-pop[0])/50
+dpdt2 = (pop[2]-pop[1])/50
+dpdt3 = (pop[3]-pop[2])/20
+print("avg pop growth 1900-1950: " + str(dpdt1))
+print("avg pop growth 1950-2000: " + str(dpdt2))
+print("avg pop growth 2000-2020: " + str(dpdt3))
 
-```{code-cell} ipython3
-print('average population changes 1900-1950, 1950-2000, 2000-2020')
-print((pop[1:] - pop[0:-1])/(year[1:] - year[0:-1]))
-print('average growth of 1900 - 2020')
-print(np.mean((pop[1:] - pop[0:-1])/(year[1:] - year[0:-1])))
+#B.
+kg1 = dpdt1/pop[1]
+kg2 = dpdt2/pop[2]
+kg3 = dpdt3/pop[3]
+print("kg 1900-1950: " + str(kg1))
+print("kg 1950-2000: " + str(kg2))
+print("kg 2000-2020: " + str(kg3))
+
+#C.
+yearsAnalytical = [1900]
+popAnalytical = [1578000000]
+kgA = 0.013
+timestep = 20
+for i in range(6):
+    yearsAnalytical.append(yearsAnalytical[i]+timestep)
+    popAnalytical.append(popAnalytical[i]/(1-kgA*timestep))
+
+import matplotlib.pyplot as plt
+%matplotlib inline
+plt.plot(year,pop,'o',label='Numerical')
+plt.plot(yearsAnalytical,popAnalytical,label='analytical')
+plt.title('Population Growth')
+plt.xlabel('Year')
+plt.ylabel('Population')
+plt.legend()
+
+#D. It would because it would become more accurate with the smaller intervals
 ```
 
 __d.__ As the number of time steps increases, the Euler approximation approaches the analytical solution, not the measured data. The best-case scenario is that the Euler solution is the same as the analytical solution.
-
 
 +++
 
@@ -666,6 +692,8 @@ __d.__ As the number of time steps increases, the Euler approximation approaches
 
 ```{code-cell} ipython3
 from math import factorial
+import numpy as np
+import time
 def exptaylor(x,n):
     '''Taylor series expansion about x=0 for the function e^x
     the full expansion follows the function
@@ -678,7 +706,32 @@ def exptaylor(x,n):
         for i in range(1,n):
             ex+=x**(i+1)/factorial(i+1) # add the nth-order result for each step in loop
         return ex
-        
+print("A. ")
+print(abs((exptaylor(1,2)-np.exp(1))/np.exp(1))*100, '% relative error')
+
+print("B. ")
+order = [2,10]
+timelist = []
+
+start = time.time()
+exptaylor(1,2)
+runtime = time.time()-start
+print("Total time for 2nd order " + str(runtime))
+timelist.append(runtime)
+
+start = time.time()
+exptaylor(1,10)
+runtime = time.time()-start
+print("Total time for 10th order " + str(runtime))
+timelist.append(runtime)
+
+
+print("C. ")
+print(np.interp(100000,order,timelist), "s for 100,000th order approx")
+```
+
+```{code-cell} ipython3
+
 ```
 
 ```{code-cell} ipython3
