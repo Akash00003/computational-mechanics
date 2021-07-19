@@ -4,13 +4,14 @@ jupytext:
   text_representation:
     extension: .md
     format_name: myst
-    format_version: 0.13
-    jupytext_version: 1.10.3
+    format_version: 0.12
+    jupytext_version: 1.6.0
 kernelspec:
   display_name: Python 3
   language: python
   name: python3
 ---
+
 ```{code-cell} ipython3
 import numpy as np
 import matplotlib.pyplot as plt
@@ -31,17 +32,25 @@ Suppose the temperature of the corpse is 85$^o$F at 11:00 am. Then, 2 hours late
 
 Assume ambient temperature is a constant 65$^{o}$F.
 
-1. Use Python to calculate $K$ using a finite difference approximation, $\frac{dT}{dt} \approx \frac{T(t+\Delta t)-T(t)}{\Delta t}$. 
+1. Use Python to calculate $K$ using a finite difference approximation, $\frac{dT}{dt} \approx \frac{T(t+\Delta t)-T(t)}{\Delta t}$.
 
 ```{code-cell} ipython3
+dTdt = (74-85)/2
+constant_K = (-1) * dTdt * (1/(74-65))
+print(constant_K)
 ```
 
-2. Change your work from problem 1 to create a function that accepts the temperature at two times, ambient temperature, and the time elapsed to return $K$. 
+2. Change your work from problem 1 to create a function that accepts the temperature at two times, ambient temperature, and the time elapsed to return $K$.
 
 ```{code-cell} ipython3
+def find_K(temp1, temp2, tempAmb, time_elapsed):
+    dTdt = (temp2-temp1)/time_elapsed
+    constant_K = (-1) * dTdt * (1/(temp2-tempAmb))
+    return constant_K
 ```
 
 ```{code-cell} ipython3
+find_K(85,74,65,2)
 ```
 
 3. A first-order thermal system has the following analytical solution, 
@@ -57,9 +66,59 @@ Assume ambient temperature is a constant 65$^{o}$F.
     c. At what time was the corpse 98.6$^{o}$F? i.e. what was the time of death?
 
 ```{code-cell} ipython3
+import numpy as np
+import math
+import matplotlib.pyplot as plt
+total_time = 4 #hours
+def tempValues(steps):
+    t_euler = []
+    t_time = []
+    
+    t_euler.append(85)
+    oldTemp = 85
+    t_time.append(0)
+    oldTime = 0
+    
+    interval = total_time/steps
+    for i in range(steps):
+        oldTime += interval
+        oldTemp = 5*((7942*interval) - 200*oldTemp)/(611*interval - 1000)
+        t_time.append(oldTime)
+        t_euler.append(oldTemp)
+    t_analyitical = []
+    error_vals = []
+    index = 0
+    for timeVal in t_time:
+        newTemp = 65+20*math.exp(-0.611*timeVal)
+        t_analyitical.append(newTemp)
+        error_vals.append((t_euler[index] - newTemp)/newTemp)
+        index +=1
+    return np.mean(error_vals)
+
+
+
+#Part A
+n = []
+error = []
+for i in range(2,9):
+    n.append(int(math.pow(10,i)))
+    print(error.append(tempValues(int(math.pow(10,i)))))
+
+plt.loglog(n, error,'o')
+plt.xlabel('number of timesteps N')
+plt.ylabel('relative error')
+plt.title('Truncation and roundoff error \naccumulation in log-log plot')
+
+
+print("B. It would approach the ambient temp of 65 deg F")
+
+#Part C
+# 98.6 = 65 + (85-65)*e^(-0.611t)
+# t ~ -0.85 
+# time of death was 0.85 hr = 51.6 mins before time of discovery
 ```
 
-
+```{code-cell} ipython3
 4. Now that we have a working numerical model, we can look at the results if the
 ambient temperature is not constant i.e. T_a=f(t). We can use the weather to improve our estimate for time of death. Consider the following Temperature for the day in question. 
 
@@ -79,9 +138,12 @@ ambient temperature is not constant i.e. T_a=f(t). We can use the weather to imp
 
     b. Modify the Euler approximation solution to account for changes in temperature at each hour. 
     Compare the new nonlinear Euler approximation to the linear analytical model. 
-    At what time was the corpse 98.6$^{o}$F? i.e. what was the time of death? 
-    
-    
+    At what time was the corpse 98.6$^{o}$F? i.e. what was the time of death?
+```
+
+```{code-cell} ipython3
+
+```
 
 ```{code-cell} ipython3
 
