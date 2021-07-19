@@ -100,15 +100,18 @@ def tempValues(steps):
 #Part A
 n = []
 error = []
-for i in range(2,9):
-    n.append(int(math.pow(10,i)))
-    print(error.append(tempValues(int(math.pow(10,i)))))
+
+for i in range(2,15):
+  steps = int(math.pow(2,i))
+  n.append(steps)
+  error.append(tempValues(steps))
+
 
 plt.loglog(n, error,'o')
 plt.xlabel('number of timesteps N')
 plt.ylabel('relative error')
-plt.title('Truncation and roundoff error \naccumulation in log-log plot')
-
+plt.title('Part A')
+plt.show
 
 print("B. It would approach the ambient temp of 65 deg F")
 
