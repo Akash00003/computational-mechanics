@@ -1,15 +1,4 @@
 Traceback (most recent call last):
-  File "/opt/hostedtoolcache/Python/3.9.6/x64/lib/python3.9/site-packages/nbclient/client.py", line 622, in _async_poll_for_reply
-    msg = await ensure_async(self.kc.shell_channel.get_msg(timeout=new_timeout))
-  File "/opt/hostedtoolcache/Python/3.9.6/x64/lib/python3.9/site-packages/nbclient/util.py", line 85, in ensure_async
-    result = await obj
-  File "/opt/hostedtoolcache/Python/3.9.6/x64/lib/python3.9/site-packages/jupyter_client/asynchronous/channels.py", line 48, in get_msg
-    raise Empty
-_queue.Empty
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
   File "/opt/hostedtoolcache/Python/3.9.6/x64/lib/python3.9/site-packages/jupyter_cache/executors/utils.py", line 51, in single_nb_execution
     executenb(
   File "/opt/hostedtoolcache/Python/3.9.6/x64/lib/python3.9/site-packages/nbclient/client.py", line 1112, in execute
@@ -22,18 +11,38 @@ Traceback (most recent call last):
     return future.result()
   File "/opt/hostedtoolcache/Python/3.9.6/x64/lib/python3.9/site-packages/nbclient/client.py", line 553, in async_execute
     await self.async_execute_cell(
-  File "/opt/hostedtoolcache/Python/3.9.6/x64/lib/python3.9/site-packages/nbclient/client.py", line 841, in async_execute_cell
-    exec_reply = await self.task_poll_for_reply
-  File "/opt/hostedtoolcache/Python/3.9.6/x64/lib/python3.9/site-packages/nbclient/client.py", line 646, in _async_poll_for_reply
-    await self._async_handle_timeout(timeout, cell)
-  File "/opt/hostedtoolcache/Python/3.9.6/x64/lib/python3.9/site-packages/nbclient/client.py", line 696, in _async_handle_timeout
-    raise CellTimeoutError.error_from_timeout_and_cell(
-nbclient.exceptions.CellTimeoutError: A cell timed out while it was being executed, after 30 seconds.
-The message was: Cell execution timed out.
-Here is a preview of the cell contents:
--------------------
-['import numpy as np', 'import math', 'import matplotlib.pyplot as plt', 'total_time = 4 #hours', 'def tempValues(steps):']
-...
-['', '#Part C', '# 98.6 = 65 + (85-65)*e^(-0.611t)', '# t ~ -0.85 ', '# time of death was 0.85 hr = 51.6 mins before time of discovery']
--------------------
+  File "/opt/hostedtoolcache/Python/3.9.6/x64/lib/python3.9/site-packages/nbclient/client.py", line 857, in async_execute_cell
+    self._check_raise_for_error(cell, exec_reply)
+  File "/opt/hostedtoolcache/Python/3.9.6/x64/lib/python3.9/site-packages/nbclient/client.py", line 760, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+4. Now that we have a working numerical model, we can look at the results if the
+ambient temperature is not constant i.e. T_a=f(t). We can use the weather to improve our estimate for time of death. Consider the following Temperature for the day in question. 
+
+    |time| Temp ($^o$F)|
+    |---|---|
+    |6am|50|
+    |7am|51|
+    |8am|55|
+    |9am|60|
+    |10am|65|
+    |11am|70|
+    |noon|75|
+    |1pm|80|
+
+    a. Create a function that returns the current temperature based upon the time (0 hours=11am, 65$^{o}$F) 
+    *Plot the function $T_a$ vs time. Does it look correct? Is there a better way to get $T_a(t)$?
+
+    b. Modify the Euler approximation solution to account for changes in temperature at each hour. 
+    Compare the new nonlinear Euler approximation to the linear analytical model. 
+    At what time was the corpse 98.6$^{o}$F? i.e. what was the time of death?
+------------------
+
+[0;36m  File [0;32m"/tmp/ipykernel_2199/4276040582.py"[0;36m, line [0;32m1[0m
+[0;31m    4. Now that we have a working numerical model, we can look at the results if the[0m
+[0m       ^[0m
+[0;31mSyntaxError[0m[0;31m:[0m invalid syntax
+
+SyntaxError: invalid syntax (4276040582.py, line 1)
 
