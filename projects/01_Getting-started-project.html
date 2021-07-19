@@ -302,9 +302,45 @@
 <ol class="simple">
 <li><p>Use Python to calculate <span class="math notranslate nohighlight">\(K\)</span> using a finite difference approximation, <span class="math notranslate nohighlight">\(\frac{dT}{dt} \approx \frac{T(t+\Delta t)-T(t)}{\Delta t}\)</span>.</p></li>
 </ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dTdt</span> <span class="o">=</span> <span class="p">(</span><span class="mi">74</span><span class="o">-</span><span class="mi">85</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span>
+<span class="n">constant_K</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">dTdt</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mi">74</span><span class="o">-</span><span class="mi">65</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">constant_K</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.611111111111111
+</pre></div>
+</div>
+</div>
+</div>
 <ol class="simple">
 <li><p>Change your work from problem 1 to create a function that accepts the temperature at two times, ambient temperature, and the time elapsed to return <span class="math notranslate nohighlight">\(K\)</span>.</p></li>
 </ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">find_K</span><span class="p">(</span><span class="n">temp1</span><span class="p">,</span> <span class="n">temp2</span><span class="p">,</span> <span class="n">tempAmb</span><span class="p">,</span> <span class="n">time_elapsed</span><span class="p">):</span>
+    <span class="n">dTdt</span> <span class="o">=</span> <span class="p">(</span><span class="n">temp2</span><span class="o">-</span><span class="n">temp1</span><span class="p">)</span><span class="o">/</span><span class="n">time_elapsed</span>
+    <span class="n">constant_K</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">dTdt</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="n">temp2</span><span class="o">-</span><span class="n">tempAmb</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">constant_K</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">find_K</span><span class="p">(</span><span class="mi">85</span><span class="p">,</span><span class="mi">74</span><span class="p">,</span><span class="mi">65</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.611111111111111
+</pre></div>
+</div>
+</div>
+</div>
 <ol>
 <li><p>A first-order thermal system has the following analytical solution,</p>
 <p><span class="math notranslate nohighlight">\(T(t) =T_a+(T(0)-T_a)e^{-Kt}\)</span></p>
@@ -314,49 +350,121 @@
 <p>c. At what time was the corpse 98.6<span class="math notranslate nohighlight">\(^{o}\)</span>F? i.e. what was the time of death?</p>
 </li>
 </ol>
-<ol>
-<li><p>Now that we have a working numerical model, we can look at the results if the
-ambient temperature is not constant i.e. T_a=f(t). We can use the weather to improve our estimate for time of death. Consider the following Temperature for the day in question.</p>
-<table class="colwidths-auto table">
-<thead>
-<tr class="row-odd"><th class="head"><p>time</p></th>
-<th class="head"><p>Temp (<span class="math notranslate nohighlight">\(^o\)</span>F)</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>6am</p></td>
-<td><p>50</p></td>
-</tr>
-<tr class="row-odd"><td><p>7am</p></td>
-<td><p>51</p></td>
-</tr>
-<tr class="row-even"><td><p>8am</p></td>
-<td><p>55</p></td>
-</tr>
-<tr class="row-odd"><td><p>9am</p></td>
-<td><p>60</p></td>
-</tr>
-<tr class="row-even"><td><p>10am</p></td>
-<td><p>65</p></td>
-</tr>
-<tr class="row-odd"><td><p>11am</p></td>
-<td><p>70</p></td>
-</tr>
-<tr class="row-even"><td><p>noon</p></td>
-<td><p>75</p></td>
-</tr>
-<tr class="row-odd"><td><p>1pm</p></td>
-<td><p>80</p></td>
-</tr>
-</tbody>
-</table>
-<p>a. Create a function that returns the current temperature based upon the time (0 hours=11am, 65<span class="math notranslate nohighlight">\(^{o}\)</span>F)
-*Plot the function <span class="math notranslate nohighlight">\(T_a\)</span> vs time. Does it look correct? Is there a better way to get <span class="math notranslate nohighlight">\(T_a(t)\)</span>?</p>
-<p>b. Modify the Euler approximation solution to account for changes in temperature at each hour.
-Compare the new nonlinear Euler approximation to the linear analytical model.
-At what time was the corpse 98.6<span class="math notranslate nohighlight">\(^{o}\)</span>F? i.e. what was the time of death?</p>
-</li>
-</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="n">total_time</span> <span class="o">=</span> <span class="mi">4</span> <span class="c1">#hours</span>
+<span class="k">def</span> <span class="nf">tempValues</span><span class="p">(</span><span class="n">steps</span><span class="p">):</span>
+    <span class="n">t_euler</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">t_time</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    <span class="n">t_euler</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">85</span><span class="p">)</span>
+    <span class="n">oldTemp</span> <span class="o">=</span> <span class="mi">85</span>
+    <span class="n">t_time</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">oldTime</span> <span class="o">=</span> <span class="mi">0</span>
+    
+    <span class="n">interval</span> <span class="o">=</span> <span class="n">total_time</span><span class="o">/</span><span class="n">steps</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">steps</span><span class="p">):</span>
+        <span class="n">oldTime</span> <span class="o">+=</span> <span class="n">interval</span>
+        <span class="n">oldTemp</span> <span class="o">=</span> <span class="mi">5</span><span class="o">*</span><span class="p">((</span><span class="mi">7942</span><span class="o">*</span><span class="n">interval</span><span class="p">)</span> <span class="o">-</span> <span class="mi">200</span><span class="o">*</span><span class="n">oldTemp</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">611</span><span class="o">*</span><span class="n">interval</span> <span class="o">-</span> <span class="mi">1000</span><span class="p">)</span>
+        <span class="n">t_time</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">oldTime</span><span class="p">)</span>
+        <span class="n">t_euler</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">oldTemp</span><span class="p">)</span>
+    <span class="n">t_analyitical</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">error_vals</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">timeVal</span> <span class="ow">in</span> <span class="n">t_time</span><span class="p">:</span>
+        <span class="n">newTemp</span> <span class="o">=</span> <span class="mi">65</span><span class="o">+</span><span class="mi">20</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mf">0.611</span><span class="o">*</span><span class="n">timeVal</span><span class="p">)</span>
+        <span class="n">t_analyitical</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">newTemp</span><span class="p">)</span>
+        <span class="n">error_vals</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">t_euler</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">-</span> <span class="n">newTemp</span><span class="p">)</span><span class="o">/</span><span class="n">newTemp</span><span class="p">)</span>
+        <span class="n">index</span> <span class="o">+=</span><span class="mi">1</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">error_vals</span><span class="p">)</span>
+
+
+
+<span class="c1">#Part A</span>
+<span class="n">n</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">error</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">9</span><span class="p">):</span>
+    <span class="n">n</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="n">i</span><span class="p">)))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">error</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tempValues</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="n">i</span><span class="p">)))))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">error</span><span class="p">,</span><span class="s1">&#39;o&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;number of timesteps N&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;relative error&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Truncation and roundoff error </span><span class="se">\n</span><span class="s1">accumulation in log-log plot&#39;</span><span class="p">)</span>
+
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;B. It would approach the ambient temp of 65 deg F&quot;</span><span class="p">)</span>
+
+<span class="c1">#Part C</span>
+<span class="c1"># 98.6 = 65 + (85-65)*e^(-0.611t)</span>
+<span class="c1"># t ~ -0.85 </span>
+<span class="c1"># time of death was 0.85 hr = 51.6 mins before time of discovery</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>None
+None
+None
+None
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>None
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>None
+</pre></div>
+</div>
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
+<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_1920</span><span class="o">/</span><span class="mf">3554090660.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">     </span><span class="mi">35</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">9</span><span class="p">):</span>
+<span class="g g-Whitespace">     </span><span class="mi">36</span>     <span class="n">n</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="n">i</span><span class="p">)))</span>
+<span class="ne">---&gt; </span><span class="mi">37</span>     <span class="nb">print</span><span class="p">(</span><span class="n">error</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tempValues</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="n">i</span><span class="p">)))))</span>
+<span class="g g-Whitespace">     </span><span class="mi">38</span> 
+<span class="g g-Whitespace">     </span><span class="mi">39</span> <span class="n">plt</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">error</span><span class="p">,</span><span class="s1">&#39;o&#39;</span><span class="p">)</span>
+
+<span class="nn">/tmp/ipykernel_1920/3554090660.py</span> in <span class="ni">tempValues</span><span class="nt">(steps)</span>
+<span class="g g-Whitespace">     </span><span class="mi">15</span>     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">steps</span><span class="p">):</span>
+<span class="g g-Whitespace">     </span><span class="mi">16</span>         <span class="n">oldTime</span> <span class="o">+=</span> <span class="n">interval</span>
+<span class="ne">---&gt; </span><span class="mi">17</span>         <span class="n">oldTemp</span> <span class="o">=</span> <span class="mi">5</span><span class="o">*</span><span class="p">((</span><span class="mi">7942</span><span class="o">*</span><span class="n">interval</span><span class="p">)</span> <span class="o">-</span> <span class="mi">200</span><span class="o">*</span><span class="n">oldTemp</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">611</span><span class="o">*</span><span class="n">interval</span> <span class="o">-</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">18</span>         <span class="n">t_time</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">oldTime</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">19</span>         <span class="n">t_euler</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">oldTemp</span><span class="p">)</span>
+
+<span class="ne">KeyboardInterrupt</span>: 
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>4. Now that we have a working numerical model, we can look at the results if the
+ambient temperature is not constant i.e. T_a=f(t). We can use the weather to improve our estimate for time of death. Consider the following Temperature for the day in question. 
+
+    |time| Temp ($^o$F)|
+    |---|---|
+    |6am|50|
+    |7am|51|
+    |8am|55|
+    |9am|60|
+    |10am|65|
+    |11am|70|
+    |noon|75|
+    |1pm|80|
+
+    a. Create a function that returns the current temperature based upon the time (0 hours=11am, 65$^{o}$F) 
+    *Plot the function $T_a$ vs time. Does it look correct? Is there a better way to get $T_a(t)$?
+
+    b. Modify the Euler approximation solution to account for changes in temperature at each hour. 
+    Compare the new nonlinear Euler approximation to the linear analytical model. 
+    At what time was the corpse 98.6$^{o}$F? i.e. what was the time of death?
+</pre></div>
+</div>
+</div>
+</div>
 </div>
 
     <script type="text/x-thebe-config">
