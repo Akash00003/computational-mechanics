@@ -122,6 +122,10 @@ print("B. It would approach the ambient temp of 65 deg F")
 ```
 
 ```{code-cell} ipython3
+import numpy as np
+import math
+import matplotlib.pyplot as plt
+'''
 4. Now that we have a working numerical model, we can look at the results if the
 ambient temperature is not constant i.e. T_a=f(t). We can use the weather to improve our estimate for time of death. Consider the following Temperature for the day in question. 
 
@@ -138,10 +142,41 @@ ambient temperature is not constant i.e. T_a=f(t). We can use the weather to imp
 
     a. Create a function that returns the current temperature based upon the time (0 hours=11am, 65$^{o}$F) 
     *Plot the function $T_a$ vs time. Does it look correct? Is there a better way to get $T_a(t)$?
+'''
+temps = [50,51,55,60,65,70,75,80]
+def t_ambient(t):
+    return temps[t+5]
+t_ambient(0)
+    #b. Modify the Euler approximation solution to account for changes in temperature at each hour. 
+    #Compare the new nonlinear Euler approximation to the linear analytical model. 
+    #At what time was the corpse 98.6$^{o}$F? i.e. what was the time of death?
 
-    b. Modify the Euler approximation solution to account for changes in temperature at each hour. 
-    Compare the new nonlinear Euler approximation to the linear analytical model. 
-    At what time was the corpse 98.6$^{o}$F? i.e. what was the time of death?
+    
+t_euler = []
+t_time = []
+
+t_euler.append(85)
+oldTemp = 85
+t_time.append(0)
+oldTime = 0
+
+interval = total_time/steps
+for i in range(3):
+    oldTime += 1
+    oldTemp = (0.611*t_ambient(i)*1-oldTemp)/(-1+0.611*1)
+    t_time.append(oldTime)
+    t_euler.append(oldTemp)
+t_analyitical = []
+index = 0
+for timeVal in t_time:
+    newTemp = 65+20*math.exp(-0.611*timeVal)
+    t_analyitical.append(newTemp)
+plt.loglog(t_time, t_euler,'o')
+plt.loglog(t_time, t_analyitical,'x')
+plt.xlabel('Time (hr)')
+plt.ylabel('Temp (F)')
+plt.title('Accounting for changing ambient')
+plt.show
 ```
 
 ```{code-cell} ipython3

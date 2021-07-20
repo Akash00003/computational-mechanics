@@ -417,36 +417,69 @@
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>4. Now that we have a working numerical model, we can look at the results if the
-ambient temperature is not constant i.e. T_a=f(t). We can use the weather to improve our estimate for time of death. Consider the following Temperature for the day in question. 
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">4. Now that we have a working numerical model, we can look at the results if the</span>
+<span class="sd">ambient temperature is not constant i.e. T_a=f(t). We can use the weather to improve our estimate for time of death. Consider the following Temperature for the day in question. </span>
 
-    |time| Temp ($^o$F)|
-    |---|---|
-    |6am|50|
-    |7am|51|
-    |8am|55|
-    |9am|60|
-    |10am|65|
-    |11am|70|
-    |noon|75|
-    |1pm|80|
+<span class="sd">    |time| Temp ($^o$F)|</span>
+<span class="sd">    |---|---|</span>
+<span class="sd">    |6am|50|</span>
+<span class="sd">    |7am|51|</span>
+<span class="sd">    |8am|55|</span>
+<span class="sd">    |9am|60|</span>
+<span class="sd">    |10am|65|</span>
+<span class="sd">    |11am|70|</span>
+<span class="sd">    |noon|75|</span>
+<span class="sd">    |1pm|80|</span>
 
-    a. Create a function that returns the current temperature based upon the time (0 hours=11am, 65$^{o}$F) 
-    *Plot the function $T_a$ vs time. Does it look correct? Is there a better way to get $T_a(t)$?
+<span class="sd">    a. Create a function that returns the current temperature based upon the time (0 hours=11am, 65$^{o}$F) </span>
+<span class="sd">    *Plot the function $T_a$ vs time. Does it look correct? Is there a better way to get $T_a(t)$?</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="n">temps</span> <span class="o">=</span> <span class="p">[</span><span class="mi">50</span><span class="p">,</span><span class="mi">51</span><span class="p">,</span><span class="mi">55</span><span class="p">,</span><span class="mi">60</span><span class="p">,</span><span class="mi">65</span><span class="p">,</span><span class="mi">70</span><span class="p">,</span><span class="mi">75</span><span class="p">,</span><span class="mi">80</span><span class="p">]</span>
+<span class="k">def</span> <span class="nf">t_ambient</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">temps</span><span class="p">[</span><span class="n">t</span><span class="o">+</span><span class="mi">5</span><span class="p">]</span>
+<span class="n">t_ambient</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="c1">#b. Modify the Euler approximation solution to account for changes in temperature at each hour. </span>
+    <span class="c1">#Compare the new nonlinear Euler approximation to the linear analytical model. </span>
+    <span class="c1">#At what time was the corpse 98.6$^{o}$F? i.e. what was the time of death?</span>
 
-    b. Modify the Euler approximation solution to account for changes in temperature at each hour. 
-    Compare the new nonlinear Euler approximation to the linear analytical model. 
-    At what time was the corpse 98.6$^{o}$F? i.e. what was the time of death?
+    
+<span class="n">t_euler</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">t_time</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="n">t_euler</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">85</span><span class="p">)</span>
+<span class="n">oldTemp</span> <span class="o">=</span> <span class="mi">85</span>
+<span class="n">t_time</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">oldTime</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="n">interval</span> <span class="o">=</span> <span class="n">total_time</span><span class="o">/</span><span class="n">steps</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+    <span class="n">oldTime</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">oldTemp</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.611</span><span class="o">*</span><span class="n">t_ambient</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">*</span><span class="mi">1</span><span class="o">-</span><span class="n">oldTemp</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="o">+</span><span class="mf">0.611</span><span class="o">*</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">t_time</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">oldTime</span><span class="p">)</span>
+    <span class="n">t_euler</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">oldTemp</span><span class="p">)</span>
+<span class="n">t_analyitical</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">timeVal</span> <span class="ow">in</span> <span class="n">t_time</span><span class="p">:</span>
+    <span class="n">newTemp</span> <span class="o">=</span> <span class="mi">65</span><span class="o">+</span><span class="mi">20</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mf">0.611</span><span class="o">*</span><span class="n">timeVal</span><span class="p">)</span>
+    <span class="n">t_analyitical</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">newTemp</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">t_time</span><span class="p">,</span> <span class="n">t_euler</span><span class="p">,</span><span class="s1">&#39;o&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">t_time</span><span class="p">,</span> <span class="n">t_analyitical</span><span class="p">,</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Time (hr)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Temp (F)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Accounting for changing ambient&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">  File</span><span class="nn"> &quot;/tmp/ipykernel_2199/4276040582.py&quot;</span><span class="gt">, line </span><span class="mi">1</span>
-<span class="g g-Whitespace">    </span><span class="mi">4</span><span class="o">.</span> <span class="n">Now</span> <span class="n">that</span> <span class="n">we</span> <span class="n">have</span> <span class="n">a</span> <span class="n">working</span> <span class="n">numerical</span> <span class="n">model</span><span class="p">,</span> <span class="n">we</span> <span class="n">can</span> <span class="n">look</span> <span class="n">at</span> <span class="n">the</span> <span class="n">results</span> <span class="k">if</span> <span class="n">the</span>
-       <span class="o">^</span>
-<span class="ne">SyntaxError</span>: invalid syntax
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;function matplotlib.pyplot.show(close=None, block=None)&gt;
 </pre></div>
 </div>
+<img alt="../_images/01_Getting-started-project_8_1.png" src="../_images/01_Getting-started-project_8_1.png" />
 </div>
 </div>
 </div>
