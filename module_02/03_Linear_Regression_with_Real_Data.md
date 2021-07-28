@@ -589,6 +589,9 @@ plt.xlabel('Year')
 plt.ylabel('Energy Consumption (TW-hrs)')
 plt.title('Regression of Energy use in USA and EUR\nBefore/After 1980')
 plt.legend();
+
+print("Eurpean usage in 2025 would be " + str(mEUR1*2025+bEUR1))
+print("USA usage in 2025 would be " + str(mUSA1*2025+bUSA1))
 ```
 
 2. You plotted Gordon Moore's empirical prediction that the rate of semiconductors on a computer chip would double every two years in [02_Seeing_Stats](./02_Seeing_Stats). This prediction was known as Moore's law. Gordon Moore had originally only expected this empirical relation to hold from 1965 - 1975 [[1](https://en.wikipedia.org/wiki/Moore%27s_law),[2](https://spectrum.ieee.org/computing/hardware/gordon-moore-the-man-whose-name-means-progress)], but semiconductor manufacuturers were able to keep up with Moore's law until 2015. 
@@ -627,11 +630,16 @@ TC=data['MOS transistor count'].values
 
 yi = np.log(TC)
 a,b = np.polyfit(xi,yi,1)
-
+print("Value of A is " + str(a))
+print("Value of B is " + str(b))
 plt.semilogy(xi,TC,'s',label='MOS transistor count')
 plt.semilogy(xi,np.exp(b)*np.exp(a*xi),label='linear regression')
 plt.title('MOS transistor count of all Designers\nevery two years \nTransistor count was x{:.2f} higher'.format(np.exp(a*2)))
 plt.xlabel('year introduced')
 plt.legend(loc='center left', bbox_to_anchor=(1, 0.5));
 plt.ylabel('# of transistors');
+```
+
+```{code-cell} ipython3
+
 ```
