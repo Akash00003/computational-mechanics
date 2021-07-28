@@ -4,8 +4,8 @@ jupytext:
   text_representation:
     extension: .md
     format_name: myst
-    format_version: 0.13
-    jupytext_version: 1.10.3
+    format_version: 0.12
+    jupytext_version: 1.6.0
 kernelspec:
   display_name: Python 3
   language: python
@@ -15,7 +15,7 @@ kernelspec:
 > __Content created under Creative Commons Attribution license CC-BY
 > 4.0, code under BSD 3-Clause License © 2020 R.C. Cooper__
 
-+++ 
++++
 
 # 04 - Statistics and Monte-Carlo Models
 
@@ -47,7 +47,6 @@ The call to `rng.random(20)` created 20 uniformly random numbers between
 0 and 1 saved as the variable `x`. Next, you can plot the histogram of
 `x`.
 
-
 ```{code-cell} ipython3
 import matplotlib.pyplot as plt
 plt.style.use('fivethirtyeight')
@@ -60,7 +59,7 @@ plt.hist(x, bins = 5,
             edgecolor = 'w')
 ```
 
-The pyplot function `hist` displays a histogram of these randomly generated numbers. 
+The pyplot function `hist` displays a histogram of these randomly generated numbers.
 
 +++
 
@@ -69,7 +68,6 @@ The pyplot function `hist` displays a histogram of these randomly generated numb
 Try generating more random numbers and plotting histograms of the results i.e. increase `10` to larger values. 
 
 What should the histogram of `x` look like if Python is generating truly random numbers?
-
 
 ```{code-cell} ipython3
 x=np.random.rand(10000)
@@ -226,9 +224,9 @@ a description of how large particles move and vibrate in fluids that
 have no buld motion. The atoms from the fluid bounce off the suspended
 particles to jiggle them randomly left and right. Take a look at [Up and
 Atom's video](https://www.youtube.com/channel/UCSIvk78tK2TiviLQn4fSHaw)
-for more information in the physics and history of the phenomenon. 
+for more information in the physics and history of the phenomenon.
 
-```{code-cell} ipyhon3
+```{code-cell} ipython3
 from IPython.display import YouTubeVideo
 YouTubeVideo('5jBVYvHeG2c')
 ```
@@ -257,7 +255,7 @@ $Delta x$ and $\Delta y$.
 the location at each step
 4. plot the results
 
-Here, you create the 100 random numbers and shift them by 0.5. 
+Here, you create the 100 random numbers and shift them by 0.5.
 
 ```{code-cell} ipython3
 rng = default_rng()
@@ -265,7 +263,8 @@ N_steps = 100
 dx = rng.random(N_steps) - 0.5
 dy = rng.random(N_steps) - 0.5
 ```
-Next, create the positions at each step. 
+
+Next, create the positions at each step.
 
 ```{code-cell} ipython3
 r = np.zeros((N_steps, 2))
@@ -273,7 +272,7 @@ r = np.zeros((N_steps, 2))
 
 Now, use
 [`np.cumsum`](https://numpy.org/doc/stable/reference/generated/numpy.cumsum.html)
-to find the final position after each step is taken. 
+to find the final position after each step is taken.
 
 ```{code-cell} ipython3
 r[:, 0] = np.cumsum(dx) # final rx position
@@ -281,7 +280,7 @@ r[:, 1] = np.cumsum(dy) # final ry position
 ```
 
 Finally, you can plot the path the particle took as it moved along its
-100 steps and its final location. 
+100 steps and its final location.
 
 ```{code-cell} ipython3
 plt.plot(r[:, 0 ], r[:, 1])
@@ -294,7 +293,7 @@ A curious result, even though we prescribed random motion, the final
 location did not end up back at the origin, where it started. __What if
 you looked at 50 particles?__ How many would end up back at the origin?
 Use a for-loop to calculate the position of 50 particles taking 100
-steps each. 
+steps each.
 
 ```{code-cell} ipython3
 num_particles = 50
@@ -330,6 +329,7 @@ Make a scaling equation to get uniformly random numbers between 10 and 20.
 _The scaling keeps the bin heights constant, but it changes the width and location of the bins in the histogram. Scaling to 10-20 shows a more extreme example._
 
 ```{code-cell} ipython3
+
 ```
 
 ### Example 3: Determine uncertainty in failure load based on geometry uncertainty
@@ -413,7 +413,7 @@ factors = np.random.rand(10000,10)-1/2 # each row represents a part and each col
 
 Now, we have created 10,000 parts with 10 uniformly random effects between -1/2-1/2. 
 
-We sum the effects and look at the final part distribution. The x-axis is labeled "A.U." for arbitrary units, we are just assuming an effect of -1/2-1/2 for each of the 10 factors.  
+We sum the effects and look at the final part distribution. The x-axis is labeled "A.U." for arbitrary units, we are just assuming an effect of -1/2-1/2 for each of the 10 factors.
 
 ```{code-cell} ipython3
 dims = np.sum(factors,axis=1)
@@ -508,7 +508,9 @@ __b.__ What length, L, should the beams be so that only 2.5% will
 reach the critical buckling load?
 
 ```{code-cell} ipython3
-def montecarlo_buckle(E,r_mean,r_std,L,N=100):
+from numpy.random import default_rng
+rng = default_rng()
+def montecarlo_buckle(r_mean,r_std,L=5,E = 200e9, N=100):
     '''Generate N rods of length L with radii of r=r_mean+/-r_std
     then calculate the mean and std of the buckling loads in for the
     rod population holding a 1000-kg structure
@@ -524,8 +526,24 @@ def montecarlo_buckle(E,r_mean,r_std,L,N=100):
     mean_buckle_load: mean buckling load of N rods under 1000*9.81/N-Newton load
     std_buckle_load: std dev buckling load of N rods under 1000*9.81/N-Newton load
     '''
+    r = rng.normal(r_mean,r_std,N)
+    p_critical = np.pi**3*E*r**4/16/L**2
+    mean_buckle_load = np.mean(p_critical)
+    std_buckle_load = np.std(p_critical)
+    
     
     return mean_buckle_load, std_buckle_load
+
+mean,std = montecarlo_buckle(r_mean = 0.01, r_std = 0.01, N=100)
+print("A: mean is ", str(mean), " and std is ", str(std))
+
+# test_vals = [10,100,500,1000]
+# results = np.zeros((len(test_vals),2))
+# for i,N in enumerate(test_vals):
+#     mean,std = montecarlo_buckle(r_mean = 0.01, r_std = 0.01, N=N)
+#     results[i,0] = mean
+#     results[i,1] = std
+# results
 ```
 
 __3.__ Generate your own normal distribution using uniformly random numbers between -1/2 and 1/2. 
@@ -537,6 +555,21 @@ __b.__ What is the effect of changing the number of samples?
 *Hint: for a-b try plotting histograms of the results.*
 
 __c.__ How would you change the mean in your generated distribution?
+
+```{code-cell} ipython3
+factors = np.random.rand(1000000,10)-1/2
+dims = np.sum(factors,axis=1)
+
+plt.hist(dims,30)
+plt.xlabel('effect A.U.')
+plt.ylabel('number of parts')
+```
+
+```{code-cell} ipython3
+print("A. increasing the # factors increases the width of the overall distribution")
+print("B. the more samples there are, the more similar the distribution gets to a normal dist.")
+print("C. to change the mean, you would need to change the -1/2 value")
+```
 
 ```{code-cell} ipython3
 
