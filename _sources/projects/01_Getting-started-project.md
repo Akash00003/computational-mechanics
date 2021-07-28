@@ -66,13 +66,17 @@ find_K(85,74,65,2)
     c. At what time was the corpse 98.6$^{o}$F? i.e. what was the time of death?
 
 ```{code-cell} ipython3
+
+```
+
+```{code-cell} ipython3
 import numpy as np
 import math
 import matplotlib.pyplot as plt
 total_time = 4 #hours
 def tempValues(steps):
-    t_euler = []
-    t_time = []
+    t_euler = [] # np.zeros(steps)
+    t_time = [] #np.linspace(0,total_time,steps)
     
     t_euler.append(85)
     oldTemp = 85
@@ -85,22 +89,21 @@ def tempValues(steps):
         oldTemp = 5*((7942*interval) - 200*oldTemp)/(611*interval - 1000)
         t_time.append(oldTime)
         t_euler.append(oldTemp)
+    #print(t_euler)
     t_analyitical = []
     error_vals = []
-    index = 0
+    index = 0  
     for timeVal in t_time:
         newTemp = 65+20*math.exp(-0.611*timeVal)
         t_analyitical.append(newTemp)
         error_vals.append((t_euler[index] - newTemp)/newTemp)
         index +=1
     return np.mean(error_vals)
-
-
-
 #Part A
 n = []
 error = []
 
+tempValues(100)
 for i in range(2,15):
   steps = int(math.pow(2,i))
   n.append(steps)
@@ -125,6 +128,9 @@ print("B. It would approach the ambient temp of 65 deg F")
 import numpy as np
 import math
 import matplotlib.pyplot as plt
+```
+
+```{code-cell} ipython3
 '''
 4. Now that we have a working numerical model, we can look at the results if the
 ambient temperature is not constant i.e. T_a=f(t). We can use the weather to improve our estimate for time of death. Consider the following Temperature for the day in question. 
@@ -143,44 +149,77 @@ ambient temperature is not constant i.e. T_a=f(t). We can use the weather to imp
     a. Create a function that returns the current temperature based upon the time (0 hours=11am, 65$^{o}$F) 
     *Plot the function $T_a$ vs time. Does it look correct? Is there a better way to get $T_a(t)$?
 '''
+```
+
+```{code-cell} ipython3
+t = [6, 7, 8, 9, 10, 11, 12, 13]
 temps = [50,51,55,60,65,70,75,80]
-def t_ambient(t):
-    return temps[t+5]
-t_ambient(0)
-    #b. Modify the Euler approximation solution to account for changes in temperature at each hour. 
-    #Compare the new nonlinear Euler approximation to the linear analytical model. 
-    #At what time was the corpse 98.6$^{o}$F? i.e. what was the time of death?
-
+def t_ambient(hour):
+    if hour > 3:
+        return temps[0]
+    else:
+        return np.interp(hour+10,t,temps)
     
-t_euler = []
-t_time = []
-
-t_euler.append(85)
-oldTemp = 85
-t_time.append(0)
-oldTime = 0
-
-interval = total_time/steps
-for i in range(3):
-    oldTime += 1
-    oldTemp = (0.611*t_ambient(i)*1-oldTemp)/(-1+0.611*1)
-    t_time.append(oldTime)
-    t_euler.append(oldTemp)
-t_analyitical = []
-index = 0
-for timeVal in t_time:
-    newTemp = 65+20*math.exp(-0.611*timeVal)
-    t_analyitical.append(newTemp)
-plt.loglog(t_time, t_euler,'o')
-plt.loglog(t_time, t_analyitical,'x')
-plt.xlabel('Time (hr)')
-plt.ylabel('Temp (F)')
-plt.title('Accounting for changing ambient')
-plt.show
+print(t_ambient(-1))
+print("test")
 ```
 
 ```{code-cell} ipython3
 
+```
+
+```{code-cell} ipython3
+
+```
+
+```{code-cell} ipython3
+#b. Modify the Euler approximation solution to account for changes in temperature at each hour. 
+#Compare the new nonlinear Euler approximation to the linear analytical model. 
+#At what time was the corpse 98.6$^{o}$F? i.e. what was the time of death?
+
+    
+total_time = 2 #hours
+def tempValues(steps):
+    
+    t_euler = [] # np.zeros(steps)
+    t_time = [] #np.linspace(0,total_time,steps)
+    
+    t_euler.append(t_ambient(0))
+    oldTemp = t_ambient(0)
+    t_time.append(0)
+    oldTime = 0
+    
+    interval = total_time/steps
+    for i in range(steps):
+        oldTime += interval
+        oldTemp = ((-1*oldTemp/interval)-0.611*t_ambient(oldTime))/(0.611-1/interval)
+        t_time.append(oldTime)
+        t_euler.append(oldTemp)
+    t_analyitical = []
+    error_vals = []
+    index = 0
+    for timeVal in t_time:
+        newTemp = t_ambient(timeVal) + (85-t_ambient(timeVal))*np.exp(-0.611*timeVal)
+        t_analyitical.append(newTemp)
+        error_vals.append((t_euler[index] - newTemp)/newTemp)
+        index +=1
+    return np.mean(error_vals)
+
+n = []
+error = []
+
+
+for i in range(2,15):
+  steps = int(math.pow(2,i))
+  n.append(steps)
+  error.append(tempValues(steps))
+
+
+plt.loglog(n, error,'o')
+plt.xlabel('number of timesteps N')
+plt.ylabel('relative error')
+plt.title('With Ambient Temp')
+plt.show
 ```
 
 ```{code-cell} ipython3
