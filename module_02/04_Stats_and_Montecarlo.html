@@ -398,10 +398,10 @@ library</a> as such</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.77582848, 0.46849725, 0.11104616, 0.2401051 , 0.09940202,
-       0.40817339, 0.202826  , 0.07294841, 0.34819408, 0.52687821,
-       0.32991401, 0.69600694, 0.25095224, 0.57267271, 0.76176233,
-       0.03299266, 0.24476335, 0.21567784, 0.03310518, 0.01641148])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.70442981, 0.42678292, 0.98836774, 0.8713248 , 0.92932148,
+       0.31608011, 0.0672418 , 0.88315143, 0.3192972 , 0.11028489,
+       0.41040089, 0.4800078 , 0.07017076, 0.75822476, 0.78480735,
+       0.51759384, 0.36216674, 0.77258223, 0.37248719, 0.42447626])
 </pre></div>
 </div>
 </div>
@@ -434,9 +434,9 @@ The call to <code class="docutils literal notranslate"><span class="pre">rng.ran
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(array([6., 5., 4., 2., 3.]),
- array([0.01641148, 0.16829488, 0.32017828, 0.47206168, 0.62394508,
-        0.77582848]),
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(array([3., 7., 2., 4., 4.]),
+ array([0.0672418 , 0.25146699, 0.43569218, 0.61991736, 0.80414255,
+        0.98836774]),
  &lt;BarContainer object of 5 artists&gt;)
 </pre></div>
 </div>
@@ -497,8 +497,8 @@ The call to <code class="docutils literal notranslate"><span class="pre">rng.ran
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.40077478, 0.41900338, 0.54969994, 0.47020873, 0.30097068,
-       0.74459141, 0.16063564, 0.06687812, 0.27252967, 0.24300249])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.29214634, 0.67918906, 0.91232962, 0.7603935 , 0.96109272,
+       0.71192919, 0.41136899, 0.90451744, 0.48038773, 0.44170181])
 </pre></div>
 </div>
 </div>
@@ -543,8 +543,8 @@ The call to <code class="docutils literal notranslate"><span class="pre">rng.ran
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>mean value for pi = 3.162000
-standard deviation is 0.054969
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>mean value for pi = 3.140800
+standard deviation is 0.051685
 actual pi is 3.141593
 </pre></div>
 </div>
@@ -572,8 +572,8 @@ we did in <span class="xref myst">03-Numerical_error</span></p></li>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>mean value for pi = 3.145640
-standard deviation is 0.046768
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>mean value for pi = 3.138760
+standard deviation is 0.055260
 actual pi is 3.141593
 </pre></div>
 </div>
@@ -596,8 +596,8 @@ actual pi is 3.141593
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>mean value for pi = 3.147520
-standard deviation is 0.010147
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>mean value for pi = 3.139680
+standard deviation is 0.013507
 actual pi is 3.141593
 </pre></div>
 </div>
@@ -748,7 +748,7 @@ steps each.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7f7386f05040&gt;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7f0c75b90e20&gt;]
 </pre></div>
 </div>
 <img alt="../_images/04_Stats_and_Montecarlo_29_1.png" src="../_images/04_Stats_and_Montecarlo_29_1.png" />
@@ -939,7 +939,9 @@ samples with normally distributed dimensions r and L.</p>
 reach the critical buckling load?</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">montecarlo_buckle</span><span class="p">(</span><span class="n">E</span><span class="p">,</span><span class="n">r_mean</span><span class="p">,</span><span class="n">r_std</span><span class="p">,</span><span class="n">L</span><span class="p">,</span><span class="n">N</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">numpy.random</span> <span class="kn">import</span> <span class="n">default_rng</span>
+<span class="n">rng</span> <span class="o">=</span> <span class="n">default_rng</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">montecarlo_buckle</span><span class="p">(</span><span class="n">r_mean</span><span class="p">,</span><span class="n">r_std</span><span class="p">,</span><span class="n">L</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span><span class="n">E</span> <span class="o">=</span> <span class="mf">200e9</span><span class="p">,</span> <span class="n">N</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;Generate N rods of length L with radii of r=r_mean+/-r_std</span>
 <span class="sd">    then calculate the mean and std of the buckling loads in for the</span>
 <span class="sd">    rod population holding a 1000-kg structure</span>
@@ -955,8 +957,29 @@ reach the critical buckling load?</p>
 <span class="sd">    mean_buckle_load: mean buckling load of N rods under 1000*9.81/N-Newton load</span>
 <span class="sd">    std_buckle_load: std dev buckling load of N rods under 1000*9.81/N-Newton load</span>
 <span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">r_mean</span><span class="p">,</span><span class="n">r_std</span><span class="p">,</span><span class="n">N</span><span class="p">)</span>
+    <span class="n">p_critical</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">**</span><span class="mi">3</span><span class="o">*</span><span class="n">E</span><span class="o">*</span><span class="n">r</span><span class="o">**</span><span class="mi">4</span><span class="o">/</span><span class="mi">16</span><span class="o">/</span><span class="n">L</span><span class="o">**</span><span class="mi">2</span>
+    <span class="n">mean_buckle_load</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">p_critical</span><span class="p">)</span>
+    <span class="n">std_buckle_load</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">p_critical</span><span class="p">)</span>
+    
     
     <span class="k">return</span> <span class="n">mean_buckle_load</span><span class="p">,</span> <span class="n">std_buckle_load</span>
+
+<span class="n">mean</span><span class="p">,</span><span class="n">std</span> <span class="o">=</span> <span class="n">montecarlo_buckle</span><span class="p">(</span><span class="n">r_mean</span> <span class="o">=</span> <span class="mf">0.01</span><span class="p">,</span> <span class="n">r_std</span> <span class="o">=</span> <span class="mf">0.01</span><span class="p">,</span> <span class="n">N</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;A: mean is &quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">mean</span><span class="p">),</span> <span class="s2">&quot; and std is &quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">std</span><span class="p">))</span>
+
+<span class="c1"># test_vals = [10,100,500,1000]</span>
+<span class="c1"># results = np.zeros((len(test_vals),2))</span>
+<span class="c1"># for i,N in enumerate(test_vals):</span>
+<span class="c1">#     mean,std = montecarlo_buckle(r_mean = 0.01, r_std = 0.01, N=N)</span>
+<span class="c1">#     results[i,0] = mean</span>
+<span class="c1">#     results[i,1] = std</span>
+<span class="c1"># results</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>A: mean is  1117.035186463597  and std is  2522.4877339130835
 </pre></div>
 </div>
 </div>
@@ -966,6 +989,40 @@ reach the critical buckling load?</p>
 <p><strong>b.</strong> What is the effect of changing the number of samples?</p>
 <p><em>Hint: for a-b try plotting histograms of the results.</em></p>
 <p><strong>c.</strong> How would you change the mean in your generated distribution?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">factors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">1000000</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span>
+<span class="n">dims</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">factors</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">dims</span><span class="p">,</span><span class="mi">30</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;effect A.U.&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;number of parts&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;number of parts&#39;)
+</pre></div>
+</div>
+<img alt="../_images/04_Stats_and_Montecarlo_46_1.png" src="../_images/04_Stats_and_Montecarlo_46_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;A. increasing the # factors increases the width of the overall distribution&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;B. the more samples there are, the more similar the distribution gets to a normal dist.&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;C. to change the mean, you would need to change the -1/2 value&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>A. increasing the # factors increases the width of the overall distribution
+B. the more samples there are, the more similar the distribution gets to a normal dist.
+C. to change the mean, you would need to change the -1/2 value
+</pre></div>
+</div>
+</div>
+</div>
 </div>
 
     <script type="text/x-thebe-config">

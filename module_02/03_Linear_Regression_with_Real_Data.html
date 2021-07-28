@@ -437,7 +437,7 @@
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_2154</span><span class="o">/</span><span class="mf">1662815981.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_1977</span><span class="o">/</span><span class="mf">1662815981.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="ne">----&gt; </span><span class="mi">2</span> <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
@@ -983,6 +983,9 @@ land temperature anomoly? Split the data and perform two linear fits.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Energy Consumption (TW-hrs)&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Regression of Energy use in USA and EUR</span><span class="se">\n</span><span class="s1">Before/After 1980&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">();</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Eurpean usage in 2025 would be &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">mEUR1</span><span class="o">*</span><span class="mi">2025</span><span class="o">+</span><span class="n">bEUR1</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;USA usage in 2025 would be &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">mUSA1</span><span class="o">*</span><span class="mi">2025</span><span class="o">+</span><span class="n">bUSA1</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -1013,7 +1016,8 @@ Color the data according to the “Designer”.</p>
 
 <span class="n">yi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">TC</span><span class="p">)</span>
 <span class="n">a</span><span class="p">,</span><span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">polyfit</span><span class="p">(</span><span class="n">xi</span><span class="p">,</span><span class="n">yi</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
-
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Value of A is &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Value of B is &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">b</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">semilogy</span><span class="p">(</span><span class="n">xi</span><span class="p">,</span><span class="n">TC</span><span class="p">,</span><span class="s1">&#39;s&#39;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;MOS transistor count&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">semilogy</span><span class="p">(</span><span class="n">xi</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">b</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">a</span><span class="o">*</span><span class="n">xi</span><span class="p">),</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;linear regression&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;MOS transistor count of all Designers</span><span class="se">\n</span><span class="s1">every two years </span><span class="se">\n</span><span class="s1">Transistor count was x</span><span class="si">{:.2f}</span><span class="s1"> higher&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">a</span><span class="o">*</span><span class="mi">2</span><span class="p">)))</span>
