@@ -166,6 +166,87 @@
    </li>
   </ul>
  </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../module_03/README.html">
+   Computational Mechanics 03- Initial Value Problems
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../module_03/01_Catch_Motion.html">
+     Catch things in motion
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../module_03/02_Step_Future.html">
+     Step to the future
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../module_03/03_Get_Oscillations.html">
+     Get with the oscillations
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../module_03/04_Getting_to_the_root.html">
+     Roots of Nonlinear functions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../projects/03_IVP-project.html">
+     Initial Value Problems - Project
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../module_04/README.html">
+   Computational Mechanics 4 - Linear Algebra
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../module_04/01_Linear-Algebra.html">
+     Linear Algebra Introduction
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../module_04/02_Gauss_elimination.html">
+     Gauss Elimination
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../module_04/03_Linear-regression-algebra.html">
+     Linear Regression Algebra
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../how-to/README.html">
+   Quick How-to documents
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+  <label for="toctree-checkbox-5">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../how-to/polyfit.html">
+     Creating a quadratic fit on random data
+    </a>
+   </li>
+  </ul>
+ </li>
 </ul>
 
     </div>
@@ -398,10 +479,10 @@ library</a> as such</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.00743598, 0.38820077, 0.0470028 , 0.08987958, 0.75272732,
-       0.86706606, 0.3193043 , 0.51001075, 0.53837784, 0.88053694,
-       0.73739657, 0.19384355, 0.50400292, 0.77439292, 0.02625513,
-       0.72098408, 0.05769205, 0.51656726, 0.51498813, 0.69818799])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.03098936, 0.04272077, 0.86306312, 0.87223409, 0.46804676,
+       0.88870219, 0.11566323, 0.26464346, 0.44220305, 0.50026894,
+       0.43387922, 0.83572084, 0.76080867, 0.2580534 , 0.52696686,
+       0.18783098, 0.77994064, 0.87763567, 0.89204762, 0.58590074])
 </pre></div>
 </div>
 </div>
@@ -434,9 +515,9 @@ The call to <code class="docutils literal notranslate"><span class="pre">rng.ran
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(array([5., 2., 5., 2., 6.]),
- array([0.00743598, 0.18205618, 0.35667637, 0.53129656, 0.70591675,
-        0.88053694]),
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(array([4., 2., 5., 1., 8.]),
+ array([0.03098936, 0.20320101, 0.37541266, 0.54762431, 0.71983596,
+        0.89204762]),
  &lt;BarContainer object of 5 artists&gt;)
 </pre></div>
 </div>
@@ -497,9 +578,8 @@ The call to <code class="docutils literal notranslate"><span class="pre">rng.ran
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([9.28989614e-02, 9.21602094e-01, 2.46483731e-01, 6.13204863e-05,
-       4.71794828e-01, 5.88676942e-01, 2.83679052e-01, 7.71447605e-01,
-       7.24755512e-02, 7.34265131e-01])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.79429898, 0.89619354, 0.19715552, 0.23155855, 0.98158875,
+       0.53626807, 0.62097729, 0.94855496, 0.4477613 , 0.476676  ])
 </pre></div>
 </div>
 </div>
@@ -544,8 +624,8 @@ The call to <code class="docutils literal notranslate"><span class="pre">rng.ran
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>mean value for pi = 3.129600
-standard deviation is 0.033140
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>mean value for pi = 3.158400
+standard deviation is 0.050634
 actual pi is 3.141593
 </pre></div>
 </div>
@@ -573,8 +653,8 @@ we did in <span class="xref myst">03-Numerical_error</span></p></li>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>mean value for pi = 3.152200
-standard deviation is 0.057026
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>mean value for pi = 3.142880
+standard deviation is 0.050184
 actual pi is 3.141593
 </pre></div>
 </div>
@@ -597,8 +677,8 @@ actual pi is 3.141593
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>mean value for pi = 3.153360
-standard deviation is 0.021509
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>mean value for pi = 3.138160
+standard deviation is 0.016097
 actual pi is 3.141593
 </pre></div>
 </div>
@@ -749,7 +829,7 @@ steps each.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7faf40d28460&gt;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7f36d0ba43a0&gt;]
 </pre></div>
 </div>
 <img alt="../_images/04_Stats_and_Montecarlo_29_1.png" src="../_images/04_Stats_and_Montecarlo_29_1.png" />
@@ -980,7 +1060,7 @@ reach the critical buckling load?</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>A: mean is  3419.8160916618885  and std is  9785.2810018881
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>A: mean is  1954.0990915134985  and std is  7002.332124046072
 </pre></div>
 </div>
 </div>
