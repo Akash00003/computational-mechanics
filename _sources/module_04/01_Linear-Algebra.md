@@ -4,8 +4,8 @@ jupytext:
   text_representation:
     extension: .md
     format_name: myst
-    format_version: 0.13
-    jupytext_version: 1.10.3
+    format_version: 0.12
+    jupytext_version: 1.6.0
 kernelspec:
   display_name: Python 3
   language: python
@@ -56,7 +56,7 @@ import numpy as np
 A=np.array([[-7,3,0],[7,-19,12],[0,4,-12]])
 b=np.array([-20,0,-8])
 
-np.linalg.solve(A,b)
+x = np.linalg.solve(A,b)
 for i in range(0,3):
     print('[{:5.1f} {:5.1f} {:5.1f}] {} [{:3.1f}] {} [{:5.1f}]'.format(*A[i],'*',x[i],'=',b[i]))
 ```
@@ -117,11 +117,11 @@ c_{3}\end{array}\right]=\left[\begin{array}{c}
 
 $\mathbf{Ax}=\mathbf{b}$
 
-Now, let's use some numpy linear algebra to solve for $c_2$. First, define $\mathbf{A}$ and $\mathbf{b}$ your known constants. 
+Now, let's use some numpy linear algebra to solve for $c_2$. First, define $\mathbf{A}$ and $\mathbf{b}$ your known constants.
 
 ```{code-cell} ipython3
 A=np.array([[-7,3,0],[7,-19,12],[0,4,-12]])
-b=np.array([-5,0,-8])
+b=np.array([-20,0,-8])
 print('matrix A:\t vector b:')
 for i in range(0,3):
     print(A[i],'\t',b[i])
@@ -136,7 +136,7 @@ we just want to understand the inputs and outputs
 x = np.linalg.solve(A,b)
 ```
 
-In the next cell, you run this line of code. The inputs are the matrix $\mathbf{A}$ and vector $\mathbf{b}$, as defined above as `A` and `b`. The output is your unknown vector $\mathbf{x}=[c_1,~c_2,~c_3]$. If you plug in the values of `x` into your mass balance equations you will see that mass is conserved. 
+In the next cell, you run this line of code. The inputs are the matrix $\mathbf{A}$ and vector $\mathbf{b}$, as defined above as `A` and `b`. The output is your unknown vector $\mathbf{x}=[c_1,~c_2,~c_3]$. If you plug in the values of `x` into your mass balance equations you will see that mass is conserved.
 
 ```{code-cell} ipython3
 x = np.linalg.solve(A,b)
@@ -145,10 +145,12 @@ print('c1 = {:.2f} mg/m^3,\nc2 = {:.2f} mg/m^3,\nc3 = {:.2f} mg/mm^3'.format(*x)
 
 ## Exercise
 
-Show that $\mathbf{Ax} = \mathbf{b}$ in the previous mixing container example. Plug the values of `x` into the three equations and show that mass is conserved. 
+Show that $\mathbf{Ax} = \mathbf{b}$ in the previous mixing container example. Plug the values of `x` into the three equations and show that mass is conserved.
 
 ```{code-cell} ipython3
-
+print(3.86*-7 + 2.33*3)
+print(3.86*7 + 2.33*-19 + 1.44*12)
+print(2.33*4 + 1.44*-12)
 ```
 
 ## Vectors 
@@ -159,7 +161,7 @@ You use vectors to represent unknown variables or known outputs. In numpy, a vec
 y = np.array([1,2,3])
 ```
 
-If you ask for the `shape` of `y`, you get an output of `(3,)`, which means it is a one dimensional vector. 
+If you ask for the `shape` of `y`, you get an output of `(3,)`, which means it is a one dimensional vector.
 
 ```{code-cell} ipython3
 y=np.array([1,2,3])
@@ -347,8 +349,6 @@ x2 = np.linalg.solve(A2,y2)
 print('a={:.2f} m/s/s\nT1={:.1f} N\nT2={:.1f} N\nT3={:.1f} N'.format(*x2))
 ```
 
-
-
 ## Exercise
 
 1. Plug in the values that you solved into the original 4 equations. Show that your values for accelerations and tensions satisfy your initial equations. 
@@ -373,11 +373,10 @@ The specification of _independent equations_ is best illustrated using _dependen
 
 2. $2x+2y=6$
 
-
 ```{code-cell} ipython3
 A_sing = np.array([[1,1],[2,2]])
 y_sing = np.array([3,6])
-np.linalg.solve(A_sing,y_sing)
+#np.linalg.solve(A_sing,y_sing)
 ```
 
 ## Singular and ill-conditioned matrices
@@ -481,7 +480,7 @@ $10^{15-15} = 1$
 
 and if you look at the values you calculated when you changed $\delta$, the values youre within a range of $\approx 1$. 
 
-The __key idea__ here is that the condition of the matrix is directly related to the accuracy of your solutions. 
+The __key idea__ here is that the condition of the matrix is directly related to the accuracy of your solutions.
 
 ```{code-cell} ipython3
 print('{:e}'.format(np.linalg.cond(A_ill)))
@@ -573,7 +572,19 @@ m_{3}g \\
 m_{4}g \end{array} \right]$
 
 ```{code-cell} ipython3
+import numpy as np
+m1 = 1
+m2 = 2
+m3 = 3
+m4 = 4
+g = 9.81
+k = 1000
 
+A = np.array([[2*k,-k,0,0],[-k,2*k,-k,0],[0,-k,2*k,-k],[0,0,-k,k]])
+b = np.array([m1*g,m2*g,m3*g,m4*g])
+
+x = np.linalg.solve(A,b)
+print(x)
 ```
 
 ![HVAC diagram showing the flow rates and connections between floors](../images/hvac.png)
@@ -609,7 +620,23 @@ c. Solve for the unknown variables, $\mathbf{x}$
 d. What are the warmest and coldest rooms? What are their temperatures?
 
 ```{code-cell} ipython3
+m1 = 0.1
+m2 = 0.15
+m3 = 0.17
+m4 = 0.15
+m5 = 0.02
+m6 = 0.05
+Cp = 1000
+Qin = 500
+Tin = 15
 
+A = np.array([[-m2*Cp,m6*Cp,0],[m2*Cp,-m3*Cp-m6*Cp,m5*Cp],[0,m3*Cp,-m5*Cp-m4*Cp]])
+b = np.array([-m1*Cp*Tin,-Qin,-Qin])
+x = np.linalg.solve(A,b)
+print(x)
+print("T1: ",x[0])
+print("T2: ",x[1])
+print("T3: ",x[2])
 ```
 
 3. The [Hilbert Matrix](https://en.wikipedia.org/wiki/Hilbert_matrix) has a high condition number and as the matrix increases dimensions, the condition number increases. Find the condition number of a 
@@ -624,7 +651,19 @@ d. $15 \times 15$ Hilbert matrix
 
 e. $20 \times 20$ Hilbert matrix
 
-If the accuracy of each matrix element is $\approx 10^{-16}$, what is the expected rounding error in the solution $\mathbf{Ax} = \mathbf{b}$, where $\mathbf{A}$ is the Hilbert matrix. 
+If the accuracy of each matrix element is $\approx 10^{-16}$, what is the expected rounding error in the solution $\mathbf{Ax} = \mathbf{b}$, where $\mathbf{A}$ is the Hilbert matrix.
+
+```{code-cell} ipython3
+from sympy import *
+
+testVals = [1,5,10,15,20]
+start = "A"
+print("Condition Numbers")
+for i in testVals:
+    x = Symbol('x')
+    print(start,". ", integrate(x**(2*i-2),(x,0,1)))
+    start = chr(ord(start) + 1)
+```
 
 ```{code-cell} ipython3
 

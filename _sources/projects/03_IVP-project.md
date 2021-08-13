@@ -4,8 +4,8 @@ jupytext:
   text_representation:
     extension: .md
     format_name: myst
-    format_version: 0.13
-    jupytext_version: 1.10.3
+    format_version: 0.12
+    jupytext_version: 1.6.0
 kernelspec:
   display_name: Python 3
   language: python
@@ -59,7 +59,7 @@ Your first objective is to integrate a numerical model that converges to
 equation (2.b), the Tsiolkovsky equation. Next, you will add drag and
 gravity and compare the results _between equations (1) and (2)_.
 Finally, you will vary the mass change rate to achieve the desired
-detonation height. 
+detonation height.
 
 +++
 
@@ -95,6 +95,7 @@ Integrate the function until mass, $m_{f}=0.05~kg$, using a mass rate change of 
 ```{code-cell} ipython3
 import numpy as np
 import matplotlib.pyplot as plt
+import sympy
 plt.style.use('fivethirtyeight')
 ```
 
@@ -114,17 +115,27 @@ def simplerocket(state,dmdt=0.05, u=250):
     derivs: array of three derivatives [v (u/m*dmdt-g-c/mv^2) -dmdt]^T
     '''
     
-    dstate = np.zeros(np.shape(state))
-    # your work
-    return dstate
+    return np.array([state[1],(u/state[2])*dmdt, state[2]])
 ```
 
 ```{code-cell} ipython3
+from scipy.integrate import solve_ivp
 m0=0.25
 mf=0.05
 dm=0.05
-t = np.linspace(0,(m0-mf)/dm,500)
-dt=t[1]-t[0]
+for dm in [0.05, 0.1, 0.15]:
+    t = np.linspace(0,(m0-mf)/dm,500)
+    dt=t[1]-t[0]
+
+    sol = solve_ivp(lambda t, state:simplerocket(state, dmdt = dm), [0, t.max()], [0, 0, m0], t_eval=t)
+
+    plt.plot(sol.t, sol.y[0], label = 'dm = {}'.format(dm))
+plt.legend()
+# m0=0.25
+# mf=0.05
+# dm=0.05
+# t = np.linspace(0,(m0-mf)/dm,500)
+# dt=t[1]-t[0]
 ```
 
 __2.__ You should have a converged solution for integrating `simplerocket`. Now, create a more relastic function, `rocket` that incorporates gravity and drag and returns the velocity, $v$, the acceleration, $a$, and the mass rate change $\frac{dm}{dt}$, as a function of the $state = [position,~velocity,~mass] = [y,~v,~m]$ using eqn (1). Where the mass rate change $\frac{dm}{dt}$ and the propellent speed $u$ are constants. The average velocity of gun powder propellent used in firework rockets is $u=250$ m/s [3,4]. 
@@ -156,9 +167,25 @@ def rocket(state,dmdt=0.05, u=250,c=0.18e-3):
     derivs: array of three derivatives [v (u/m*dmdt-g-c/mv^2) -dmdt]^T
     '''
     g=9.81
-    dstate = np.zeros(np.shape(state))
-    # your work
-    return dstate
+    return np.array([state[1],(u/state[2])*dmdt-g, state[2]])
+```
+
+```{code-cell} ipython3
+from scipy.integrate import solve_ivp
+m0=0.25
+mf=0.05
+dm=0.05
+for dm in [0.05, 0.1, 0.15]:
+    t = np.linspace(0,(m0-mf)/dm,500)
+    dt=t[1]-t[0]
+
+    sol = solve_ivp(lambda t, state:rocket(state, dmdt = dm), [0, t.max()], [0, 0, m0], t_eval=t)
+
+    plt.plot(sol.t, sol.y[0], label = 'dm = {}'.format(dm))
+    print(sol.y[0][-1])
+plt.legend()
+
+print("Rocket reaches lower heights of roughly 70 wheras simplerocket reached roughly double at 150")
 ```
 
 __3.__ Solve for the mass change rate that results in detonation at a height of 300 meters. Create a function `f_dm` that returns the final height of the firework when it reaches $m_{f}=0.05~kg$. The inputs should be 
@@ -182,7 +209,7 @@ b. Use the modified secant method to find the root of the function $f_{m}$.
 c. Plot your solution for the height as a function of time and indicate the detonation with a `*`-marker.
 
 ```{code-cell} ipython3
-def f_dm(dmdt, m0 = 0.25, c = 0.18e-3, u = 250):
+def f_dm(dm, m0 = 0.25, c = 0.18e-3, u = 250):
     ''' define a function f_dm(dmdt) that returns 
     height_desired-height_predicted[-1]
     here, the time span is based upon the value of dmdt
@@ -199,11 +226,63 @@ def f_dm(dmdt, m0 = 0.25, c = 0.18e-3, u = 250):
     error: the difference between height_desired and height_predicted[-1]
         when f_dm(dmdt) = 0, the correct mass change rate was chosen
     '''
-    # your work
+    t = np.linspace(0,(m0-mf)/dm,500)
+    dt=t[1]-t[0]
+
+    sol = solve_ivp(lambda t, state:rocket(state, dmdt = dm), [0, t.max()], [0, 0, m0], t_eval=t)
+    error = 300-sol.y[0][-1]
     return error
 ```
 
 ```{code-cell} ipython3
+dmdtvals = np.zeros(350)
+errorvals = np.zeros(350)
+
+
+for i in range (50,400,1):
+    dmdt = 0.001*i
+    dmdtvals[i-50] = dmdt
+    errorvals[i-50] = f_dm(dmdt)
+
+print("Lowest error value is at a dmdt of ",str(dmdtvals[int(np.argmin(errorvals))]),"kg/s")
+print("where error is ", np.min(errorvals))
+plt.plot(dmdtvals,errorvals)
+plt.xlabel('dmdt')
+plt.ylabel('error in height')
+```
+
+```{code-cell} ipython3
+def incsearch(func,xmin,xmax,ns=50):
+    '''incsearch: incremental search root locator
+    xb = incsearch(func,xmin,xmax,ns):
+      finds brackets of x that contain sign changes
+      of a function on an interval
+    arguments:
+    ---------
+    func = name of function
+    xmin, xmax = endpoints of interval
+    ns = number of subintervals (default = 50)
+    returns:
+    ---------
+    xb(k,1) is the lower bound of the kth sign change
+    xb(k,2) is the upper bound of the kth sign change
+    If no brackets found, xb = [].'''
+    x = np.linspace(xmin,xmax,ns)
+    f = func(x)
+    sign_f = np.sign(f)
+    delta_sign_f = sign_f[1:]-sign_f[0:-1]
+    i_zeros = np.nonzero(delta_sign_f!=0)
+    nb = len(i_zeros[0])
+    xb = np.block([[ x[i_zeros[0]+1]],[x[i_zeros[0]] ]] )
+
+    
+    if nb==0:
+      print('no brackets found\n')
+      print('check interval or increase ns\n')
+    else:
+      print('number of brackets:  {}\n'.format(nb))
+    return xb
+
 def mod_secant(func,dx,x0,es=0.0001,maxit=50):
     '''mod_secant: Modified secant root location zeroes
     root,[fx,ea,iter]=mod_secant(func,dfunc,xr,es,maxit,p1,p2,...):

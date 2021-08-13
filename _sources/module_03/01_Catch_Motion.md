@@ -4,8 +4,8 @@ jupytext:
   text_representation:
     extension: .md
     format_name: myst
-    format_version: 0.13
-    jupytext_version: 1.10.3
+    format_version: 0.12
+    jupytext_version: 1.6.0
 kernelspec:
   display_name: Python 3
   language: python
@@ -243,6 +243,7 @@ v_i = \frac{y_{i+1}-y_i}{\Delta t}, \qquad a_i = \frac{v_{i+1}-v_i}{\Delta t}
 
 ```{code-cell} ipython3
 y_coords = np.array(coords)[:,1]
+print(y_coords)
 delta_y = (y_coords[1:] - y_coords[:-1]) *0.25 / gap_lines.mean()
 ```
 
@@ -427,7 +428,7 @@ The x-y-coordinates occur at 1/60 s, 2/60s, ... len(y)/60s = `np.arange(0,len(y)
 
 ```{code-cell} ipython3
 t = np.arange(0,len(y))/60
-np.savez('../data/projectile_coords.npz',t=t,x=x,y=-y)
+np.savez('projectile_coords.npz',t=t,x=x,y=-y)
 ```
 
 ## Discussion
@@ -555,7 +556,44 @@ plt.plot(ay);
     d. Plot the polyfit lines for velocity and position (2 figures) with the finite difference velocity data points and positions. Which lines look like better e.g. which line fits the data?
 
 ```{code-cell} ipython3
+npz_coords = np.load('projectile_coords.npz')
+t = npz_coords['t']
+x = npz_coords['x']
+y = npz_coords['y']
 
+delta_x = (x[1:] - x[:-1])
+vx = delta_x * 60
+print("Vx is ", vx.mean())
+delta_y = (y[1:] - y[:-1])
+vy = delta_y * 60
+print("Vy is ", vy.mean())
+
+#plt.scatter(x,y);
+
+polyX = np.polyfit(t,x,1)
+polyY = np.polyfit(t,y,1)
+x1 = np.polyval(polyX,t)
+y1 = np.polyval(polyY,t)
+
+
+print("Polyfit1st vx Acceleration is ", polyX.mean())
+print("Polyfit1st vy Acceleration is ", polyY.mean())
+
+
+polyX2 = np.polyfit(t,x,2)
+polyY2 = np.polyfit(t, y,2)
+x2 = np.polyval(polyX2,t)
+y2 = np.polyval(polyY2,t)
+print("Polyfit2nd vx Acceleration is ", polyX.mean())
+print("Polyfit2nd vy Acceleration is ", polyY.mean())
+
+fig = plt.figure()
+plt.plot(t,x1, "r--", label = "1st X")
+plt.plot(t,y1, "b--", label = "1st Y")
+plt.plot(t,x2, "o--", label = "2nd X")
+plt.plot(t,y2, "g--", label = "2nd Y")
+plt.legend()
+#plt.legend('X1st', 'Y1st', 'X2nd', 'Y2nd')
 ```
 
 2. Not only can you measure acceleration of objects that you track, you can look at other physical constants like [coefficient of restitution](https://en.wikipedia.org/wiki/Coefficient_of_restitution), $e$ . 
@@ -571,6 +609,80 @@ plt.plot(ay);
      b. Find the locations when $v_y$ changes rapidly i.e. the impact locations. Get the maximum and minimum velocities closest to the impact location. _Hint: this can be a little tricky. Try slicing the data to include one collision at a time before using  the `np.min` and `np.max` commands._
      
      c. Calculate the $e$ for each of the three collisions
+
+```{code-cell} ipython3
+filename = '../data/fallingtennisball02.txt'
+t, y = np.loadtxt(filename, usecols=[0,1], unpack=True)
+fig = plt.figure(figsize=(6,4))
+plt.plot(t,y);
+```
+
+```{code-cell} ipython3
+tVal = np.empty(len(t)-1)
+vY = np.empty(len(t)-1)
+for i in range(len(t)):
+    if (i+1) < len(t):
+        dy = y[i+1]-y[i]
+        dt = t[i+1]-t[i]
+        vY[i] = dy/dt
+        tVal[i] = t[i]
+print(vY)
+fig = plt.figure()
+plt.scatter(tVal,vY)
+plt.title("Velocity vs Time")
+```
+
+```{code-cell} ipython3
+#Looks like it changes rapidly roughly around t = 0.6, 1.4, 2.1
+
+#First collision
+max_min_locations = [0,0]
+local_max_min = [-100,100]
+for i in range(len(tVal)):
+    if tVal[i] >0.5 and tVal[i] < 0.8 :
+        if vY[i] > local_max_min[0]: #local max
+            local_max_min[0] = vY[i]
+            max_min_locations[0] = tVal[i]
+        if vY[i] < local_max_min[1]: #local max
+            local_max_min[1] = vY[i]
+            max_min_locations[1] = tVal[i]
+
+print("First collision local max occurs at t=", max_min_locations[0], "seconds and has v=", local_max_min[0])
+print("First collision local min occurs at t=", max_min_locations[1], "seconds and has v=", local_max_min[1])
+vYprime = (local_max_min[0]-local_max_min[1])/(local_max_min[0]-local_max_min[1])
+print("E val is ", -1*vYprime/local_max_min[0])
+print("")
+max_min_locations = [0,0]
+local_max_min = [-100,100]
+for i in range(len(tVal)):
+    if tVal[i] >1.2 and tVal[i] < 1.7 :
+        if vY[i] > local_max_min[0]: #local max
+            local_max_min[0] = vY[i]
+            max_min_locations[0] = tVal[i]
+        if vY[i] < local_max_min[1]: #local max
+            local_max_min[1] = vY[i]
+            max_min_locations[1] = tVal[i]
+
+print("Second collision local max occurs at t=", max_min_locations[0], "seconds and has v=", local_max_min[0])
+print("Second collision local min occurs at t=", max_min_locations[1], "seconds and has v=", local_max_min[1])
+vYprime = (local_max_min[0]-local_max_min[1])/(local_max_min[0]-local_max_min[1])
+print("E val is ", -1*vYprime/local_max_min[0])
+print("")
+max_min_locations = [0,0]
+local_max_min = [-100,100]
+for i in range(len(tVal)):
+    if tVal[i] >1.8 and tVal[i] < 2.3 :
+        if vY[i] > local_max_min[0]: #local max
+            local_max_min[0] = vY[i]
+            max_min_locations[0] = tVal[i]
+        if vY[i] < local_max_min[1]: #local max
+            local_max_min[1] = vY[i]
+            max_min_locations[1] = tVal[i]
+print("Third collision local max occurs at t=", max_min_locations[0], "seconds and has v=", local_max_min[0])
+print("Third collision local min occurs at t=", max_min_locations[1], "seconds and has v=", local_max_min[1])
+vYprime = (local_max_min[0]-local_max_min[1])/(local_max_min[0]-local_max_min[1])
+print("E val is ", -1*vYprime/local_max_min[0])
+```
 
 ```{code-cell} ipython3
 

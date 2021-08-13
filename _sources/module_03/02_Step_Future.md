@@ -4,8 +4,8 @@ jupytext:
   text_representation:
     extension: .md
     format_name: myst
-    format_version: 0.13
-    jupytext_version: 1.10.3
+    format_version: 0.12
+    jupytext_version: 1.6.0
 kernelspec:
   display_name: Python 3
   language: python
@@ -88,7 +88,7 @@ _Note: the direction of positive acceleration was changed to up, so that a posit
 
 ### Step through time
 
-In the code cell below, you define acceleration as a function of velocity and add two parameters `c` and `m` to define drag coefficient and mass of the object.  
+In the code cell below, you define acceleration as a function of velocity and add two parameters `c` and `m` to define drag coefficient and mass of the object.
 
 ```{code-cell} ipython3
 def a_freefall(v,c=0.25,m=60):
@@ -148,7 +148,7 @@ computed variables. Note that you use the Matplotlib
 [`subplot()`](https://matplotlib.org/api/_as_gen/matplotlib.pyplot.subplot.html?highlight=matplotlib%20pyplot%20subplot#matplotlib.pyplot.subplot)
 function to get the two plots in one figure. The argument to `subplot()`
 is a set of three digits, corresponding to the number of rows, number of
-columns, and plot number in a matrix of sub-plots. 
+columns, and plot number in a matrix of sub-plots.
 
 ```{code-cell} ipython3
 # plot velocity and position over time
@@ -234,7 +234,7 @@ v \\ \frac{c}{m}v^2-g
 \end{bmatrix}.
 \end{equation}
 
-Equation (9) above represents the _state_ of the system, at any given instant in time. A code design for the numerical solution that generalizes to other changing systems (or _dynamical systems_) is to write one function that computes the right-hand side of the differential equation (the derivatives of the state variables), and another function that takes a state and applies the numerical method for each time increment. The solution is then computed in one `for` statement that calls these functions. 
+Equation (9) above represents the _state_ of the system, at any given instant in time. A code design for the numerical solution that generalizes to other changing systems (or _dynamical systems_) is to write one function that computes the right-hand side of the differential equation (the derivatives of the state variables), and another function that takes a state and applies the numerical method for each time increment. The solution is then computed in one `for` statement that calls these functions.
 
 +++
 
@@ -337,7 +337,7 @@ for i in range(N-1):
     num_sol[i+1] = eulerstep(num_sol[i], freefall, dt)
 ```
 
-Did it work? Exciting! Let's plot in the same figure both the numerical solution and the experimental data. 
+Did it work? Exciting! Let's plot in the same figure both the numerical solution and the experimental data.
 
 ```{code-cell} ipython3
 fig = plt.figure(figsize=(6,4))
@@ -414,7 +414,7 @@ has to be in the range of $6.54$–$6.86 \rm{cm}$, and its mass in the
 range of $56.0$–$59.4 \rm{g}$. Choose a value in the middle of the range for each quantity.
 
 ```{code-cell} ipython3
-def fall_drag(state,C_d=0.47,m=0.0577,R = 0.0661/2):
+def fall_drag(state,C_d=0.47,m=0.0594,R = 0.0686/2):
     '''Computes the right-hand side of the differential equation
     for the fall of a ball, with drag, in SI units.
     
@@ -534,7 +534,33 @@ _Given:_ y(0) = 1.6 m, v(0) = 0 m/s
 Is there a difference in the two solutions? At what times do the tennis ball and lacrosse balls reach the ground? Which was first?
 
 ```{code-cell} ipython3
+N = 40
+num_sol_drag_tennis = np.zeros([N,2])
+num_sol_drag_tennis[0,0] = 1.6
+num_sol_drag_tennis[0,1] = 0
+for i in range(N-1):
+    num_sol_drag_tennis[i+1] = eulerstep(num_sol_drag_tennis[i], fall_drag, dt)
+    
+num_sol_drag_lac = np.zeros([N,2])
+num_sol_drag_lac[0,0] = 1.6
+num_sol_drag_lac[0,1] = 0
+for i in range(N-1):
+    num_sol_drag_lac[i+1] = eulerstep(num_sol_drag_lac[i], lambda state:fall_drag(state,C_d=0.47,m=0.147,R = 0.0627/2), dt)
 
+fig = plt.figure(figsize=(6,4))
+plt.plot(t[:N], num_sol_drag_tennis[:,0],'s',alpha=0.8,label='Tennis Ball')
+plt.plot(t[:N], num_sol_drag_lac[:,0], label='Lacrosse Ball')
+plt.xlabel('Time [s]')
+plt.ylabel('$y$ [m]')
+plt.legend();
+```
+
+```{code-cell} ipython3
+print("Both solutions differ by a small amount")
+print(num_sol_drag_tennis[:,0][-7:])
+print(num_sol_drag_lac[:,0][-7:])
+print(num_sol_drag_tennis[:,0][34])
+print("They hit the ground at roughly at the same time of , ", t[34], "seconds")
 ```
 
 ![Projectile motion with drag](../images/projectile.png)
@@ -557,7 +583,7 @@ v_y \\ g - cv_y^2
 \end{bmatrix}, 
 \end{equation}
 
-where $c= \frac{1}{2} \pi R^2 \rho C_d$. 
+where $c= \frac{1}{2} \pi R^2 \rho C_d$.
 
 +++
 
@@ -565,9 +591,7 @@ where $c= \frac{1}{2} \pi R^2 \rho C_d$.
 
     $\mathbf{\dot{y}} = projectile\_drag(\mathbf{y})$
     
-    Below is the start of a function definition, be sure to update the help file. 
-    
-
+    Below is the start of a function definition, be sure to update the help file.
 
 ```{code-cell} ipython3
 def projectile_drag(state,C_d=0.47,m=0.143,R = 0.0661/2):
@@ -582,17 +606,15 @@ def projectile_drag(state,C_d=0.47,m=0.143,R = 0.0661/2):
     R : radius of ball default in meters is 0.0661/2 m (tennis ball)
     Returns
     -------
-    derivs: array of four derivatives [?? ?? ?? ??]
+    derivs: array of four derivatives Vx -c*Vx^2 Vy g-c*Vy^2]
     '''
     
     rho = 1.22   # air density kg/m^3
     pi = np.pi
-
+    c = 1/2 * pi * R**2 * rho * C_d
+    
+    derivs = np.array([state[1], -c*(state[1])**2, state[3], -9.8-c*(state[3])**2])
     return derivs
-```
-
-```{code-cell} ipython3
-
 ```
 
 3. Integrate your `projectile_drag` function using the Euler integration method. Use initial conditions from the saved data in lesson  [01_Catch_Motion](01_Catch_Motion.ipynb), there is a numpy `npz` file in the data folder if you want to check your results from lesson 1. The initial conditions in the provided npz file are
@@ -615,8 +637,32 @@ npz = np.load('../data/projectile_coords.npz')
 t3=npz['t']
 x3=npz['x']
 y3=npz['y']
-```
+dt = t3[5]-t3[4]
+delta_x = (x3[1:] - x3[0:-1])
+delta_y = (y3[1:] - y3[0:-1])
+vx = (x3[1:] - x3[0:-1]) * 60
+vy = (y3[1:] - y3[0:-1]) * 60
+state = np.array([x3,vx,y3,vy])
 
-```{code-cell} ipython3
+N = len(t3)
+num_sol_drag = np.zeros([N,4])
+num_sol_drag[0,0] = 0.5610
+num_sol_drag[0,1] = 2.6938
+num_sol_drag[0,2] = -0.1858
+num_sol_drag[0,3] = -0.0759
+
+for i in range(N-1):
+    num_sol_drag[i+1] = eulerstep(num_sol_drag[i], projectile_drag, dt)
+    
+
+print("There is a noticable difference with drag")    
+    
+fig = plt.figure(figsize=(6,4))
+#plt.plot(x3, y3,'s',alpha=0.8,label='No Drag')
+plt.plot(num_sol_drag[:,0], num_sol_drag[:,2],'s',alpha=0.8,label='With Drag')
+plt.xlabel('x [m]')
+plt.ylabel('$y$ [m]')
+plt.legend();
+
 
 ```

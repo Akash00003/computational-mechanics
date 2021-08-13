@@ -4,8 +4,8 @@ jupytext:
   text_representation:
     extension: .md
     format_name: myst
-    format_version: 0.13
-    jupytext_version: 1.10.3
+    format_version: 0.12
+    jupytext_version: 1.6.0
 kernelspec:
   display_name: Python 3
   language: python
@@ -192,7 +192,12 @@ plt.legend();
 The quadratic curve plotted should be smooth, but you Python is connected each (x,y)-location provided with straight lines. Plot the quadratic fit with 50 x-data points to make it smooth.
 
 ```{code-cell} ipython3
-
+x_fcn=np.linspace(min(x),max(x),50);
+plt.plot(x,y,'o',label='data')
+plt.plot(x,Z@a,label='quadratic fit')
+plt.xlabel('x')
+plt.ylabel('y')
+plt.legend();
 ```
 
 ## General Coefficient of Determination
@@ -227,7 +232,7 @@ What is the highest possible coefficient of determination? If its maximized, is 
 Compare the coefficient of determination for a straight line _(you have to do a fit)_ to the quadratic fit _(done above)_. Which one is a better fit?
 
 ```{code-cell} ipython3
-
+# Highest possibly would be 1
 ```
 
 ## Overfitting Warning 
@@ -497,7 +502,67 @@ e. Repeat b-d for orders 2,3,4,...,10
 f. Plot the error in __testing-training__ error vs the order of the polynomial fit
 
 ```{code-cell} ipython3
+fname = '../data/land_global_temperature_anomaly-1880-2016.csv'
 
+temp_data = pd.read_csv(fname,skiprows=4)
+
+t = temp_data['Year'].values
+T = temp_data['Value'].values
+
+# randomize testing/training indices
+np.random.seed(103)
+i_rand=np.random.randint(0,len(t),size=len(t))
+# choose the first half of data as training
+train_per=0.7
+t_train=t[i_rand[:int(len(t)*train_per)]]
+T_train=T[i_rand[:int(len(t)*train_per)]]
+
+# choose the second half of data as testing
+t_test=t[i_rand[int(len(t)*train_per):]]
+T_test=T[i_rand[int(len(t)*train_per):]]
+
+Z=np.block([[t_train**0]]).T
+Z_test=np.block([[t_test**0]]).T
+
+max_N=30
+SSE_train=np.zeros(max_N)
+SSE_test=np.zeros(max_N)
+for i in range(1,max_N):
+    Z=np.hstack((Z,t_train.reshape(-1,1)**i))
+    Z_test=np.hstack((Z_test,t_test.reshape(-1,1)**i))
+    A = np.linalg.solve(Z.T@Z,Z.T@T_train)
+    St=np.std(T_train)
+    Sr=np.std(T_train-Z@A)
+    r2=1-Sr/St
+    if (i)%5==0:
+        print('---- n={:d} -------'.format(i))
+        print('the coefficient of determination for this fit is {:.3f}'.format(r2))
+        print('the correlation coefficient this fit is {:.3f}'.format(r2**0.5))
+    if (i) <=6 or i==29: plt.plot(t_train,T_train-Z@A,'o',label='order {:d}'.format(i))
+    SSE_train[i]=np.sum((T_train-Z@A)**2)/len(T_train)
+    SSE_test[i]=np.sum((T_test-Z_test@A)**2)/len(T_test)
+    
+#plt.plot(d,F)
+plt.legend(loc='center left', bbox_to_anchor=(1, 0.5));
+plt.title('Error in predicted vs measured values')
+plt.xlabel('year)')
+plt.ylabel('temp error');
+```
+
+```{code-cell} ipython3
+f, (ax1,ax2)=plt.subplots(1,2,figsize=(12,4),tight_layout=True)
+ax1.semilogy(np.arange(2,max_N),SSE_train[2:],label='training error')
+ax1.semilogy(np.arange(2,max_N),SSE_test[2:],label='testing error')
+f.suptitle('Reduction in error with higher order fits')
+ax1.legend();
+ax1.set_xlabel('polynomial order')
+ax1.set_ylabel('total sum of square error');
+ax2.plot(t_train,Z@A+100,'o',label='train order {:d}'.format(i-1))
+ax2.plot(t_test,Z_test@A-100,'s',label='test order {:d}'.format(i-1))
+ax2.plot(t,T,'d',label='AFM data')
+ax2.legend();
+ax2.set_ylabel('Temp-offset for clarity')
+ax2.set_xlabel('year');
 ```
 
 <img src="../images/prony-series.png" style="width: 300px;"/> <img src="../images/stress_relax_wheat.png" style="width: 400px;"/> 
@@ -519,7 +584,50 @@ c. Solve for the constants, $a_1,~a_2,~a_3,~a_4~,a_5$
 d. Plot the best-fit function and the data from `../data/stress_relax.dat` _Use at least 50 points in time to get a smooth best-fit line._
 
 ```{code-cell} ipython3
+fname = '../data/stress_relax.dat'
 
+stress_data = np.loadtxt(fname,delimiter=',',skiprows=1)
+
+#print(stress_data)
+t_vals = stress_data[:,0]
+stress_vals = stress_data[:,1]
+print("Part A")
+plt.plot(t_vals,stress_vals)
+plt.xlabel('time (sec)')
+plt.ylabel('stress (MPa)');
+```
+
+```{code-cell} ipython3
+from scipy.optimize import curve_fit
+from numpy import arange
+#print("Part B")
+Z=np.block([[t_vals**0],[t_vals],[t_vals**2]]).T
+a = np.linalg.solve(Z.T@Z,Z.T@stress_vals)
+print("Part C")
+print("a1 = ",a[0])
+print("a2 = ", a[1])
+print("a3 = ", a[2])
+x = t_vals
+y = stress_vals
+
+def objective(x, a, b, c, d, e, f):
+    return (a * x) + (b * x**2) + (c * x**3) + (d * x**4) + (e * x**5) + f
+
+
+
+# curve fit
+popt, _ = curve_fit(objective, x, y)
+# summarize the parameter values
+a, b, c, d, e, f = popt
+# plot input vs output
+plt.scatter(x, y)
+# define a sequence of inputs between the smallest and largest known inputs
+x_line = arange(min(x), max(x), 1)
+# calculate the output for the range
+y_line = objective(x_line, a, b, c, d, e, f)
+# create a line plot for the mapping function
+plt.plot(x_line, y_line, '--', color='red')
+plt.show()
 ```
 
 3. Load the '../data/primary-energy-consumption-by-region.csv' that has the energy consumption of different regions of the world from 1965 until 2018 [Our world in Data](https://ourworldindata.org/energy). 
@@ -531,6 +639,33 @@ a. Use a piecewise least-squares regression to find a function for the energy co
 energy consumed = $f(t) = At+B+C(t-1970)H(t-1970)$
 
 c. What is your prediction for US energy use in 2025? How about European energy use in 2025?
+
+```{code-cell} ipython3
+fname = '../data/primary-energy-consumption-by-region.csv'
+
+temp_data = pd.read_csv(fname)
+EUR = temp_data[temp_data['Entity']=='Europe']
+
+#print(EUR)
+
+t = EUR['Year'].values
+T = EUR['Primary Energy Consumption (terawatt-hours)'].values
+
+plt.scatter(t,T)
+plt.xlabel('Year')
+plt.ylabel('Primary Energy Consumption (terawatt-hours)');
+```
+
+```{code-cell} ipython3
+Z= np.block([[t],[t**0],[(t-1970)*(t>=1970)]]).T
+fit = np.linalg.solve(Z.T@Z,Z.T@T)
+#print(Z)
+
+plt.plot(t,T,'o-',label='measured anomoly')
+plt.plot(t,Z@fit,label='piece-wise best-fit')
+plt.title('Piecewise fit to temperature anomoly')
+plt.legend();
+```
 
 ```{code-cell} ipython3
 

@@ -4,8 +4,8 @@ jupytext:
   text_representation:
     extension: .md
     format_name: myst
-    format_version: 0.13
-    jupytext_version: 1.10.3
+    format_version: 0.12
+    jupytext_version: 1.6.0
 kernelspec:
   display_name: Python 3
   language: python
@@ -258,7 +258,7 @@ $\left[ \begin{array}{ccc|c}
 
 ```{code-cell} ipython3
 Ay= np.array([[10,2,1,1],[2,1,1,1],[1,2,10,1]],dtype=float)
-AP([Ay],['[Ay]'])
+print(Ay)
 ```
 
 Now, subtract $1/5*A[0,:]$ from $A[1]$. 
@@ -272,7 +272,7 @@ $\left[ \begin{array}{ccc|c}
 
 ```{code-cell} ipython3
 Ay[1,:]= Ay[1,:]-0.2*Ay[0,:]
-AP([Ay],['[Ay]'])
+print(Ay)
 ```
 
 Now, subtract $1/10*A[0,:]$ from $A[2,:]$. 
@@ -286,7 +286,7 @@ $\left[ \begin{array}{ccc|c}
 
 ```{code-cell} ipython3
 Ay[2,:]= Ay[2,:]-0.1*Ay[0,:]
-AP([Ay],['[Ay]'])
+print(Ay)
 ```
 
 Finally, you can substract $1.8/0.6*A[1,:]$ from $A[2,:]
@@ -300,7 +300,7 @@ $\left[ \begin{array}{ccc|c}
 
 ```{code-cell} ipython3
 Ay[2,:]= Ay[2,:]-1.8/0.6*Ay[1,:]
-AP([Ay],['[Ay]'])
+print(Ay)
 ```
 
 ## Back substitution
@@ -367,7 +367,8 @@ y=np.array([1,1,1])
 x, Aug = GaussNaive(A,y)
 
 print('x=  \t\tAug=')
-AP([x,Ay],['[x]',' [Ay]'])
+for i in range(len(x)):
+    print('{:.2f}\t\t'.format(x[i]) , Ay[i])
 ```
 
 ## Revisit Example with Mixing Tanks
@@ -435,14 +436,17 @@ x3,Aug3 = GaussNaive(A,b3)
 
 ```{code-cell} ipython3
 print('example 1')
-print('x=  \tAug=')
-AP([x,Ay],['[x]',' [Ay]'])
+print('x=  \t\tAug=')
+for i in range(len(x)):
+    print('{:.2f}\t\t'.format(x[i]) , Ay[i])
 print('\nexample 2')
-print('x=  \tAug=')
-AP([x,Ay],['[x]',' [Ay]'])
+print('x=  \t\tAug=')
+for i in range(len(x)):
+    print('{:.2f}\t\t'.format(x[i]) , Ay[i])
 print('\nexample 3')
-print('x=  \tAug=')
-AP([x,Ay],['[x]',' [Ay]'])
+print('x=  \t\tAug=')
+for i in range(len(x)):
+    print('{:.2f}\t\t'.format(x[i]) , Ay[i])
 ```
 
 ## Solving the same problem with different inputs  
@@ -495,10 +499,10 @@ U=np.array([[-7,3,0],[0,-16,12],[0,0,-9]])
 
 Use the `@`-symbol to confirm LU = A. 
 
-`L@U` 
+`L@U`
 
 ```{code-cell} ipython3
-
+L@U
 ```
 
 Now, you can rewrite our problem $\mathbf{Ax} = \mathbf{b}$ as $\mathbf{LUx} = \mathbf{b}$. This may not see helpful at first, but take a look at the new system of equations that you can solve
@@ -545,7 +549,7 @@ y_{1} \\
 y_{2} \\
 y_{3}\end{array}\right]$
 
-You can solve these equations without Gauss elimination. You just need to use a __forward substitution__ for $\mathbf{Ly}=\mathbf{b}$ and a __backward substitution__ for $\mathbf{Ux}=\mathbf{y}$. 
+You can solve these equations without Gauss elimination. You just need to use a __forward substitution__ for $\mathbf{Ly}=\mathbf{b}$ and a __backward substitution__ for $\mathbf{Ux}=\mathbf{y}$.
 
 ```{code-cell} ipython3
 def solveLU(L,U,b):
@@ -610,7 +614,6 @@ In the last two comparisons, it is not always immediately obvious that the LU-de
 * $x_1=[0...50]~mg/m^3$
 
 * $x_2=[0...50]~mg/m^3$
-
 
 ```{code-cell} ipython3
 N=51 # meshgrid is NxN
@@ -709,7 +712,7 @@ $\mathbf{LU}=\mathbf{A}=\left[ \begin{array}{cc}
 $
 
 ```{code-cell} ipython3
-
+L@U
 ```
 
 ## Create LU decomposition function
@@ -770,7 +773,8 @@ Use the `LUNaive` function to create $\mathbf{L}$ and $\mathbf{U}$ matrices from
 0 & 2 & 4 & -12 \end{array} \right]$
 
 ```{code-cell} ipython3
-
+A = [[18,2],[-2,10]]
+LUNaive(A)
 ```
 
 ### Problem (Diagonal element is zero)
@@ -846,7 +850,7 @@ a. $\left[ \begin{array}{cccc}
 2/3 \end{array} \right]\neq
 \left[ \begin{array}{c}
 2 \\
-1 \end{array} \right]$ 
+1 \end{array} \right]$
 
 ```{code-cell} ipython3
 Aa@np.array([0,2/3])
@@ -864,7 +868,7 @@ x_{2} \end{array} \right]=
 1.0000 \\
 2 \end{array} \right]$
 
-and the solution changes to $x_1=1/3$ and $x_2=2/3$. This solution satisfies our initial equations. 
+and the solution changes to $x_1=1/3$ and $x_2=2/3$. This solution satisfies our initial equations.
 
 ```{code-cell} ipython3
 Aa = np.array([[1,1],[1e-19,3]])
@@ -901,7 +905,7 @@ print(aug_b)
 
 ## Exercise
 
-Swap row 1 with either row 2 or row 3. What is the solution for `x_b` now? Show that if you plug in the solution for $[x_1,~x_2,~x_3]$ into the unpivoted $\mathbf{A}$ that the result is $[8,~-3,~5]$. 
+Swap row 1 with either row 2 or row 3. What is the solution for `x_b` now? Show that if you plug in the solution for $[x_1,~x_2,~x_3]$ into the unpivoted $\mathbf{A}$ that the result is $[8,~-3,~5]$.
 
 ```{code-cell} ipython3
 
@@ -1006,7 +1010,19 @@ m_{3}g \\
 m_{4}g \end{array} \right]$
 
 ```{code-cell} ipython3
+import numpy as np
+m1 = 1
+m2 = 2
+m3 = 3
+m4 = 4
+g = 9.81
+k = 1000
 
+A = np.array([[2*k,-k,0,0],[-k,2*k,-k,0],[0,-k,2*k,-k],[0,0,-k,k]])
+b = np.array([m1*g,m2*g,m3*g,m4*g])
+
+x = np.linalg.solve(A,b)
+print(x)
 ```
 
 ![Triangular truss](../images/truss.png)
@@ -1033,10 +1049,38 @@ a. Create the system of equations, $\mathbf{Ax}=\mathbf{b}$, when $\alpha=35^o$,
 
 b. Solve for the $\mathbf{LU}$ decomposition of $\mathbf{A}$. 
 
-c. Use the $\mathbf{LU}$ solution to solve for the tension in bar 1 $(P_1)$ every 10 N values of force, F, between 100 N and 1100 N. Plot $P_1~vs~F$. 
+c. Use the $\mathbf{LU}$ solution to solve for the tension in bar 1 $(P_1)$ every 10 N values of force, F, between 100 N and 1100 N. Plot $P_1~vs~F$.
 
 ```{code-cell} ipython3
+import numpy as np
 
+
+A = np.array([[1,np.cos(35*np.pi/180),0],[0,-2*np.cos(40/2*np.pi/180),0],[0,np.sin(35*np.pi/180),1]])
+b = np.array([0,1,0])
+
+x, Aug = GaussNaive(A,b)
+print("A. ")
+print("p1 ", x[0])
+print("p2 ", x[1])
+print("r2 ", x[2])
+
+print("B. ")
+print(x@A)
+
+print("C. ")
+forces = np.empty(100)
+p1 = np.empty(100)
+index = 0
+for i in range(100,1100,10):
+    forces[index] = i
+    A = np.array([[1,np.cos(35*np.pi/180),0],[0,-2*np.cos(40/2*np.pi/180),0],[0,np.sin(35*np.pi/180),1]])
+    b = np.array([0,i,0])
+    x, Aug = GaussNaive(A,b)
+    p1[index] = x[0]
+    index +=1
+plt.plot(forces,p1)
+plt.xlabel('F1')
+plt.ylabel('P1')
 ```
 
 3. Using the same truss as shown above, let's calculate the tension in bar 1, $P_1$, when $\theta=[0...90^o]$ and $F=[100...1100]~kN$. When $\theta\neq 0$, the resulting 6 equations and 6 unknowns are given in the following matrix
@@ -1068,7 +1112,50 @@ a. Create the system of equations, $\mathbf{Ax}=\mathbf{b}$, when $\alpha=35^o$,
 
 b. Solve for the $\mathbf{PLU}$ decomposition of $\mathbf{A}$. 
 
-c. Use the $\mathbf{PLU}$ solution to solve for the tension in bar 1 $(P_1)$ every 10 N values of force, F, between 100 N and 1100 N. Plot $P_1~vs~F$. 
+c. Use the $\mathbf{PLU}$ solution to solve for the tension in bar 1 $(P_1)$ every 10 N values of force, F, between 100 N and 1100 N. Plot $P_1~vs~F$.
+
+```{code-cell} ipython3
+import numpy as np
+
+r1 = [0,np.sin(35*np.pi/180),0,1,0,0]
+r2 = [1,np.cos(35**np.pi/180),0,0,1,0]
+r3 = [0,np.cos(40/2*np.pi/180),np.cos(40/2*np.pi/180),0,0,0]
+r4 = [0,-1*np.sin(40/2*np.pi/180),np.sin(40/2*np.pi/180),0,0,0]
+r5 = [-1,0,np.cos(35**np.pi/180),0,0,0]
+r6 = [0,0,np.sin(35**np.pi/180),0,0,1]
+
+A = np.array([r1,r2,r3,r4,r5,r6])
+b = np.array([0,0,1*np.cos(45*np.pi/180),-1*np.cos(45*np.pi/180),0,0])
+
+P,L,U = lu(A) # a built-in partial-pivoting LU decomposition function
+print('P=\n',P)
+print('L=\n',L)
+print('U=\n',U)
+x, Aug = GaussNaive(A,b)
+x = np.linalg.solve(A,b)
+print(solveLU(L,U,P.T@b))
+
+print("P1 ", x[0])
+print("P2 ", x[1])
+print("P3 ", x[2])
+print("R1 ", x[3])
+print("R2 ", x[4])
+print("R3 ", x[5])
+
+forces = np.empty(100)
+p1 = np.empty(100)
+index = 0
+for i in range(100,1100,10):
+    forces[index] = i
+    A = np.array([r1,r2,r3,r4,r5,r6])
+    b = np.array([0,0,i*np.cos(45*np.pi/180),-i*np.cos(45*np.pi/180),0,0])
+    x = np.linalg.solve(A,b)
+    p1[index] = x[0]
+    index +=1
+plt.plot(forces,p1)
+plt.xlabel('F1')
+plt.ylabel('P1')
+```
 
 ```{code-cell} ipython3
 

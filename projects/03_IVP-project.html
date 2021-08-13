@@ -23,7 +23,7 @@
 
     
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/sphinx-book-theme.e8e5499552300ddf5d7adccae7cc3b70.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.5f77b4aec8189eecf79907ce328c390d.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
@@ -445,7 +445,21 @@ and the Tsiolkovsky analytical value.</p>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">sympy</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;fivethirtyeight&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_2025</span><span class="o">/</span><span class="mf">1665632838.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="ne">----&gt; </span><span class="mi">3</span> <span class="kn">import</span> <span class="nn">sympy</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;fivethirtyeight&#39;</span><span class="p">)</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;sympy&#39;
 </pre></div>
 </div>
 </div>
@@ -467,20 +481,30 @@ and the Tsiolkovsky analytical value.</p>
 <span class="sd">    derivs: array of three derivatives [v (u/m*dmdt-g-c/mv^2) -dmdt]^T</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     
-    <span class="n">dstate</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">state</span><span class="p">))</span>
-    <span class="c1"># your work</span>
-    <span class="k">return</span> <span class="n">dstate</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">state</span><span class="p">[</span><span class="mi">1</span><span class="p">],(</span><span class="n">u</span><span class="o">/</span><span class="n">state</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span><span class="o">*</span><span class="n">dmdt</span><span class="p">,</span> <span class="n">state</span><span class="p">[</span><span class="mi">2</span><span class="p">]])</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">m0</span><span class="o">=</span><span class="mf">0.25</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.integrate</span> <span class="kn">import</span> <span class="n">solve_ivp</span>
+<span class="n">m0</span><span class="o">=</span><span class="mf">0.25</span>
 <span class="n">mf</span><span class="o">=</span><span class="mf">0.05</span>
 <span class="n">dm</span><span class="o">=</span><span class="mf">0.05</span>
-<span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,(</span><span class="n">m0</span><span class="o">-</span><span class="n">mf</span><span class="p">)</span><span class="o">/</span><span class="n">dm</span><span class="p">,</span><span class="mi">500</span><span class="p">)</span>
-<span class="n">dt</span><span class="o">=</span><span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">dm</span> <span class="ow">in</span> <span class="p">[</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.15</span><span class="p">]:</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,(</span><span class="n">m0</span><span class="o">-</span><span class="n">mf</span><span class="p">)</span><span class="o">/</span><span class="n">dm</span><span class="p">,</span><span class="mi">500</span><span class="p">)</span>
+    <span class="n">dt</span><span class="o">=</span><span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="n">sol</span> <span class="o">=</span> <span class="n">solve_ivp</span><span class="p">(</span><span class="k">lambda</span> <span class="n">t</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span><span class="n">simplerocket</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">dmdt</span> <span class="o">=</span> <span class="n">dm</span><span class="p">),</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">t</span><span class="o">.</span><span class="n">max</span><span class="p">()],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">m0</span><span class="p">],</span> <span class="n">t_eval</span><span class="o">=</span><span class="n">t</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">sol</span><span class="o">.</span><span class="n">t</span><span class="p">,</span> <span class="n">sol</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;dm = </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">dm</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="c1"># m0=0.25</span>
+<span class="c1"># mf=0.05</span>
+<span class="c1"># dm=0.05</span>
+<span class="c1"># t = np.linspace(0,(m0-mf)/dm,500)</span>
+<span class="c1"># dt=t[1]-t[0]</span>
 </pre></div>
 </div>
 </div>
@@ -509,9 +533,28 @@ and the Tsiolkovsky analytical value.</p>
 <span class="sd">    derivs: array of three derivatives [v (u/m*dmdt-g-c/mv^2) -dmdt]^T</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">g</span><span class="o">=</span><span class="mf">9.81</span>
-    <span class="n">dstate</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">state</span><span class="p">))</span>
-    <span class="c1"># your work</span>
-    <span class="k">return</span> <span class="n">dstate</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">state</span><span class="p">[</span><span class="mi">1</span><span class="p">],(</span><span class="n">u</span><span class="o">/</span><span class="n">state</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span><span class="o">*</span><span class="n">dmdt</span><span class="o">-</span><span class="n">g</span><span class="p">,</span> <span class="n">state</span><span class="p">[</span><span class="mi">2</span><span class="p">]])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.integrate</span> <span class="kn">import</span> <span class="n">solve_ivp</span>
+<span class="n">m0</span><span class="o">=</span><span class="mf">0.25</span>
+<span class="n">mf</span><span class="o">=</span><span class="mf">0.05</span>
+<span class="n">dm</span><span class="o">=</span><span class="mf">0.05</span>
+<span class="k">for</span> <span class="n">dm</span> <span class="ow">in</span> <span class="p">[</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.15</span><span class="p">]:</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,(</span><span class="n">m0</span><span class="o">-</span><span class="n">mf</span><span class="p">)</span><span class="o">/</span><span class="n">dm</span><span class="p">,</span><span class="mi">500</span><span class="p">)</span>
+    <span class="n">dt</span><span class="o">=</span><span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="n">sol</span> <span class="o">=</span> <span class="n">solve_ivp</span><span class="p">(</span><span class="k">lambda</span> <span class="n">t</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span><span class="n">rocket</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">dmdt</span> <span class="o">=</span> <span class="n">dm</span><span class="p">),</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">t</span><span class="o">.</span><span class="n">max</span><span class="p">()],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">m0</span><span class="p">],</span> <span class="n">t_eval</span><span class="o">=</span><span class="n">t</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">sol</span><span class="o">.</span><span class="n">t</span><span class="p">,</span> <span class="n">sol</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;dm = </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">dm</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">sol</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Rocket reaches lower heights of roughly 70 wheras simplerocket reached roughly double at 150&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -530,7 +573,7 @@ the function.</p>
 <p>c. Plot your solution for the height as a function of time and indicate the detonation with a <code class="docutils literal notranslate"><span class="pre">*</span></code>-marker.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f_dm</span><span class="p">(</span><span class="n">dmdt</span><span class="p">,</span> <span class="n">m0</span> <span class="o">=</span> <span class="mf">0.25</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="mf">0.18e-3</span><span class="p">,</span> <span class="n">u</span> <span class="o">=</span> <span class="mi">250</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f_dm</span><span class="p">(</span><span class="n">dm</span><span class="p">,</span> <span class="n">m0</span> <span class="o">=</span> <span class="mf">0.25</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="mf">0.18e-3</span><span class="p">,</span> <span class="n">u</span> <span class="o">=</span> <span class="mi">250</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39; define a function f_dm(dmdt) that returns </span>
 <span class="sd">    height_desired-height_predicted[-1]</span>
 <span class="sd">    here, the time span is based upon the value of dmdt</span>
@@ -547,7 +590,11 @@ the function.</p>
 <span class="sd">    error: the difference between height_desired and height_predicted[-1]</span>
 <span class="sd">        when f_dm(dmdt) = 0, the correct mass change rate was chosen</span>
 <span class="sd">    &#39;&#39;&#39;</span>
-    <span class="c1"># your work</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,(</span><span class="n">m0</span><span class="o">-</span><span class="n">mf</span><span class="p">)</span><span class="o">/</span><span class="n">dm</span><span class="p">,</span><span class="mi">500</span><span class="p">)</span>
+    <span class="n">dt</span><span class="o">=</span><span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="n">sol</span> <span class="o">=</span> <span class="n">solve_ivp</span><span class="p">(</span><span class="k">lambda</span> <span class="n">t</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span><span class="n">rocket</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">dmdt</span> <span class="o">=</span> <span class="n">dm</span><span class="p">),</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">t</span><span class="o">.</span><span class="n">max</span><span class="p">()],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">m0</span><span class="p">],</span> <span class="n">t_eval</span><span class="o">=</span><span class="n">t</span><span class="p">)</span>
+    <span class="n">error</span> <span class="o">=</span> <span class="mi">300</span><span class="o">-</span><span class="n">sol</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">error</span>
 </pre></div>
 </div>
@@ -555,7 +602,58 @@ the function.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">mod_secant</span><span class="p">(</span><span class="n">func</span><span class="p">,</span><span class="n">dx</span><span class="p">,</span><span class="n">x0</span><span class="p">,</span><span class="n">es</span><span class="o">=</span><span class="mf">0.0001</span><span class="p">,</span><span class="n">maxit</span><span class="o">=</span><span class="mi">50</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dmdtvals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">350</span><span class="p">)</span>
+<span class="n">errorvals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">350</span><span class="p">)</span>
+
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span> <span class="p">(</span><span class="mi">50</span><span class="p">,</span><span class="mi">400</span><span class="p">,</span><span class="mi">1</span><span class="p">):</span>
+    <span class="n">dmdt</span> <span class="o">=</span> <span class="mf">0.001</span><span class="o">*</span><span class="n">i</span>
+    <span class="n">dmdtvals</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">50</span><span class="p">]</span> <span class="o">=</span> <span class="n">dmdt</span>
+    <span class="n">errorvals</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">50</span><span class="p">]</span> <span class="o">=</span> <span class="n">f_dm</span><span class="p">(</span><span class="n">dmdt</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Lowest error value is at a dmdt of &quot;</span><span class="p">,</span><span class="nb">str</span><span class="p">(</span><span class="n">dmdtvals</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">errorvals</span><span class="p">))]),</span><span class="s2">&quot;kg/s&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;where error is &quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">errorvals</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">dmdtvals</span><span class="p">,</span><span class="n">errorvals</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;dmdt&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;error in height&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">incsearch</span><span class="p">(</span><span class="n">func</span><span class="p">,</span><span class="n">xmin</span><span class="p">,</span><span class="n">xmax</span><span class="p">,</span><span class="n">ns</span><span class="o">=</span><span class="mi">50</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;incsearch: incremental search root locator</span>
+<span class="sd">    xb = incsearch(func,xmin,xmax,ns):</span>
+<span class="sd">      finds brackets of x that contain sign changes</span>
+<span class="sd">      of a function on an interval</span>
+<span class="sd">    arguments:</span>
+<span class="sd">    ---------</span>
+<span class="sd">    func = name of function</span>
+<span class="sd">    xmin, xmax = endpoints of interval</span>
+<span class="sd">    ns = number of subintervals (default = 50)</span>
+<span class="sd">    returns:</span>
+<span class="sd">    ---------</span>
+<span class="sd">    xb(k,1) is the lower bound of the kth sign change</span>
+<span class="sd">    xb(k,2) is the upper bound of the kth sign change</span>
+<span class="sd">    If no brackets found, xb = [].&#39;&#39;&#39;</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">xmin</span><span class="p">,</span><span class="n">xmax</span><span class="p">,</span><span class="n">ns</span><span class="p">)</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">sign_f</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="n">delta_sign_f</span> <span class="o">=</span> <span class="n">sign_f</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="o">-</span><span class="n">sign_f</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">i_zeros</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nonzero</span><span class="p">(</span><span class="n">delta_sign_f</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">nb</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">i_zeros</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">xb</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">block</span><span class="p">([[</span> <span class="n">x</span><span class="p">[</span><span class="n">i_zeros</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">]],[</span><span class="n">x</span><span class="p">[</span><span class="n">i_zeros</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="p">]]</span> <span class="p">)</span>
+
+    
+    <span class="k">if</span> <span class="n">nb</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+      <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;no brackets found</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+      <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;check interval or increase ns</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;number of brackets:  </span><span class="si">{}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">nb</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">xb</span>
+
+<span class="k">def</span> <span class="nf">mod_secant</span><span class="p">(</span><span class="n">func</span><span class="p">,</span><span class="n">dx</span><span class="p">,</span><span class="n">x0</span><span class="p">,</span><span class="n">es</span><span class="o">=</span><span class="mf">0.0001</span><span class="p">,</span><span class="n">maxit</span><span class="o">=</span><span class="mi">50</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;mod_secant: Modified secant root location zeroes</span>
 <span class="sd">    root,[fx,ea,iter]=mod_secant(func,dfunc,xr,es,maxit,p1,p2,...):</span>
 <span class="sd">    uses modified secant method to find the root of func</span>

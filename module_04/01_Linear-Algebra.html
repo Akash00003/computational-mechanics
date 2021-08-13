@@ -23,7 +23,7 @@
 
     
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/sphinx-book-theme.e8e5499552300ddf5d7adccae7cc3b70.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.5f77b4aec8189eecf79907ce328c390d.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
@@ -520,21 +520,16 @@ x_{3}\end{array}\right]=\left[\begin{array}{c}
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="o">-</span><span class="mi">7</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mi">7</span><span class="p">,</span><span class="o">-</span><span class="mi">19</span><span class="p">,</span><span class="mi">12</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="o">-</span><span class="mi">12</span><span class="p">]])</span>
 <span class="n">b</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mi">20</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">8</span><span class="p">])</span>
 
-<span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">b</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">b</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">):</span>
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;[</span><span class="si">{:5.1f}</span><span class="s1"> </span><span class="si">{:5.1f}</span><span class="s1"> </span><span class="si">{:5.1f}</span><span class="s1">] </span><span class="si">{}</span><span class="s1"> [</span><span class="si">{:3.1f}</span><span class="s1">] </span><span class="si">{}</span><span class="s1"> [</span><span class="si">{:5.1f}</span><span class="s1">]&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="s1">&#39;*&#39;</span><span class="p">,</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="s1">&#39;=&#39;</span><span class="p">,</span><span class="n">b</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_1809</span><span class="o">/</span><span class="mf">2400450210.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">b</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">):</span>
-<span class="ne">----&gt; </span><span class="mi">6</span>     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;[</span><span class="si">{:5.1f}</span><span class="s1"> </span><span class="si">{:5.1f}</span><span class="s1"> </span><span class="si">{:5.1f}</span><span class="s1">] </span><span class="si">{}</span><span class="s1"> [</span><span class="si">{:3.1f}</span><span class="s1">] </span><span class="si">{}</span><span class="s1"> [</span><span class="si">{:5.1f}</span><span class="s1">]&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="s1">&#39;*&#39;</span><span class="p">,</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="s1">&#39;=&#39;</span><span class="p">,</span><span class="n">b</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
-
-<span class="ne">NameError</span>: name &#39;x&#39; is not defined
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[ -7.0   3.0   0.0] * [3.9] = [-20.0]
+[  7.0 -19.0  12.0] * [2.3] = [  0.0]
+[  0.0   4.0 -12.0] * [1.4] = [ -8.0]
 </pre></div>
 </div>
 </div>
@@ -582,10 +577,18 @@ c_{3}\end{array}\right]=\left[\begin{array}{c}
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="o">-</span><span class="mi">7</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mi">7</span><span class="p">,</span><span class="o">-</span><span class="mi">19</span><span class="p">,</span><span class="mi">12</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="o">-</span><span class="mi">12</span><span class="p">]])</span>
-<span class="n">b</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">8</span><span class="p">])</span>
+<span class="n">b</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mi">20</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">8</span><span class="p">])</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;matrix A:</span><span class="se">\t</span><span class="s1"> vector b:&#39;</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">):</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">,</span><span class="n">b</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>matrix A:	 vector b:
+[-7  3  0] 	 -20
+[  7 -19  12] 	 0
+[  0   4 -12] 	 -8
 </pre></div>
 </div>
 </div>
@@ -605,11 +608,34 @@ we just want to understand the inputs and outputs</p>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>c1 = 3.86 mg/m^3,
+c2 = 2.33 mg/m^3,
+c3 = 1.44 mg/mm^3
+</pre></div>
+</div>
+</div>
 </div>
 </div>
 <div class="section" id="id1">
 <h2>Exercise<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <p>Show that <span class="math notranslate nohighlight">\(\mathbf{Ax} = \mathbf{b}\)</span> in the previous mixing container example. Plug the values of <code class="docutils literal notranslate"><span class="pre">x</span></code> into the three equations and show that mass is conserved.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="mf">3.86</span><span class="o">*-</span><span class="mi">7</span> <span class="o">+</span> <span class="mf">2.33</span><span class="o">*</span><span class="mi">3</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="mf">3.86</span><span class="o">*</span><span class="mi">7</span> <span class="o">+</span> <span class="mf">2.33</span><span class="o">*-</span><span class="mi">19</span> <span class="o">+</span> <span class="mf">1.44</span><span class="o">*</span><span class="mi">12</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="mf">2.33</span><span class="o">*</span><span class="mi">4</span> <span class="o">+</span> <span class="mf">1.44</span><span class="o">*-</span><span class="mi">12</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-20.03
+0.029999999999997584
+-7.960000000000001
+</pre></div>
+</div>
+</div>
+</div>
 </div>
 <div class="section" id="vectors">
 <h2>Vectors<a class="headerlink" href="#vectors" title="Permalink to this headline">¶</a></h2>
@@ -623,6 +649,11 @@ we just want to understand the inputs and outputs</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
 
 <span class="n">y</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(3,)
 </pre></div>
 </div>
 </div>
@@ -688,6 +719,14 @@ exercise, and blood pressure of an individual (five dimensions).</p>
 
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;external inputs&#39;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;flow in at 1: </span><span class="si">{:.1f}</span><span class="s1"> g/s</span><span class="se">\n</span><span class="s1">flow in at 2: </span><span class="si">{:.1f}</span><span class="s1"> g/s</span><span class="se">\n</span><span class="s1">flow in at 3: </span><span class="si">{:.1f}</span><span class="s1"> g/s&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="n">out</span><span class="o">*-</span><span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>external inputs
+flow in at 1: 20.0 g/s
+flow in at 2: 0.0 g/s
+flow in at 3: 8.0 g/s
 </pre></div>
 </div>
 </div>
@@ -784,12 +823,29 @@ T_{3}\end{array}\right]=\left[\begin{array}{c}
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>A2 = 		 y2=
+[-2 -1  0  0] 	 -12.486091542192055
+[-2  1 -1  0] 	 -12.486091542192055
+[-2  0  1 -1] 	 -12.486091542192055
+[ 1  0  0 -1] 	 -9.81
+</pre></div>
+</div>
+</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">A2</span><span class="p">,</span><span class="n">y2</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;a=</span><span class="si">{:.2f}</span><span class="s1"> m/s/s</span><span class="se">\n</span><span class="s1">T1=</span><span class="si">{:.1f}</span><span class="s1"> N</span><span class="se">\n</span><span class="s1">T2=</span><span class="si">{:.1f}</span><span class="s1"> N</span><span class="se">\n</span><span class="s1">T3=</span><span class="si">{:.1f}</span><span class="s1"> N&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="n">x2</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a=3.95 m/s/s
+T1=4.6 N
+T2=9.2 N
+T3=13.8 N
 </pre></div>
 </div>
 </div>
@@ -819,7 +875,7 @@ T_{3}\end{array}\right]=\left[\begin{array}{c}
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">A_sing</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">]])</span>
 <span class="n">y_sing</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">6</span><span class="p">])</span>
-<span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">A_sing</span><span class="p">,</span><span class="n">y_sing</span><span class="p">)</span>
+<span class="c1">#np.linalg.solve(A_sing,y_sing)</span>
 </pre></div>
 </div>
 </div>
@@ -856,12 +912,28 @@ T_{3}\end{array}\right]=\left[\begin{array}{c}
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>d= 2e-16
+x = 0.0, y = 3.0
+d= 5e-16
+x = -1.0, y = 4.0
+d= 1e-15
+x = -0.4, y = 3.4
+</pre></div>
+</div>
+</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:e}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">cond</span><span class="p">(</span><span class="n">A_ill</span><span class="p">)))</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:e}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">A_ill</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>3.045100e+15
+1.000000e+00
 </pre></div>
 </div>
 </div>
@@ -910,6 +982,11 @@ T_{3}\end{array}\right]=\left[\begin{array}{c}
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>3.045100e+15
+</pre></div>
+</div>
+</div>
 </div>
 </div>
 <div class="section" id="id3">
@@ -936,12 +1013,29 @@ T_{3}\end{array}\right]=\left[\begin{array}{c}
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[0.05263158 0.05       0.04761905]
+ [0.05       0.04761905 0.04545455]
+ [0.04761905 0.04545455 0.04347826]]
+</pre></div>
+</div>
+</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">p</span><span class="p">,</span><span class="n">l</span><span class="p">,</span><span class="n">u</span><span class="o">=</span><span class="n">lu</span><span class="p">(</span><span class="n">H</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">l</span><span class="p">[</span><span class="o">-</span><span class="mi">3</span><span class="p">:,</span><span class="o">-</span><span class="mi">3</span><span class="p">:])</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">u</span><span class="p">[</span><span class="o">-</span><span class="mi">3</span><span class="p">:,</span><span class="o">-</span><span class="mi">3</span><span class="p">:])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[ 1.          0.          0.        ]
+ [ 0.54930661  1.          0.        ]
+ [-0.5629512  -0.45861917  1.        ]]
+[[-1.00442848e-11 -5.12043047e-11 -1.50118321e-10]
+ [ 0.00000000e+00  3.30756256e-13  1.83182636e-12]
+ [ 0.00000000e+00  0.00000000e+00 -4.78089790e-15]]
 </pre></div>
 </div>
 </div>
@@ -996,6 +1090,30 @@ m_{1}g \\
 m_{2}g \\
 m_{3}g \\
 m_{4}g \end{array} \right]\)</span></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="n">m1</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">m2</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">m3</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">m4</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">g</span> <span class="o">=</span> <span class="mf">9.81</span>
+<span class="n">k</span> <span class="o">=</span> <span class="mi">1000</span>
+
+<span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">2</span><span class="o">*</span><span class="n">k</span><span class="p">,</span><span class="o">-</span><span class="n">k</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="o">-</span><span class="n">k</span><span class="p">,</span><span class="mi">2</span><span class="o">*</span><span class="n">k</span><span class="p">,</span><span class="o">-</span><span class="n">k</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="n">k</span><span class="p">,</span><span class="mi">2</span><span class="o">*</span><span class="n">k</span><span class="p">,</span><span class="o">-</span><span class="n">k</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="n">k</span><span class="p">,</span><span class="n">k</span><span class="p">]])</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">m1</span><span class="o">*</span><span class="n">g</span><span class="p">,</span><span class="n">m2</span><span class="o">*</span><span class="n">g</span><span class="p">,</span><span class="n">m3</span><span class="o">*</span><span class="n">g</span><span class="p">,</span><span class="n">m4</span><span class="o">*</span><span class="n">g</span><span class="p">])</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">b</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[0.0981  0.18639 0.25506 0.2943 ]
+</pre></div>
+</div>
+</div>
+</div>
 <p><img alt="HVAC diagram showing the flow rates and connections between floors" src="../_images/hvac.png" /></p>
 <ol class="simple">
 <li><p>In the figure above you have an idealized Heating, Ventilation and Air conditioning (HVAC) system. In the current configuration, the three-room building is being cooled off by <span class="math notranslate nohighlight">\(15^oC\)</span> air fed into the building at 0.1 kg/s. Our goal is to determine the steady-state temperatures of the rooms given the following information</p></li>
@@ -1022,6 +1140,37 @@ m_{4}g \end{array} \right]\)</span></p>
 <p>b. Create the known vector <span class="math notranslate nohighlight">\(\mathbf{b}\)</span></p>
 <p>c. Solve for the unknown variables, <span class="math notranslate nohighlight">\(\mathbf{x}\)</span></p>
 <p>d. What are the warmest and coldest rooms? What are their temperatures?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">m1</span> <span class="o">=</span> <span class="mf">0.1</span>
+<span class="n">m2</span> <span class="o">=</span> <span class="mf">0.15</span>
+<span class="n">m3</span> <span class="o">=</span> <span class="mf">0.17</span>
+<span class="n">m4</span> <span class="o">=</span> <span class="mf">0.15</span>
+<span class="n">m5</span> <span class="o">=</span> <span class="mf">0.02</span>
+<span class="n">m6</span> <span class="o">=</span> <span class="mf">0.05</span>
+<span class="n">Cp</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="n">Qin</span> <span class="o">=</span> <span class="mi">500</span>
+<span class="n">Tin</span> <span class="o">=</span> <span class="mi">15</span>
+
+<span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="o">-</span><span class="n">m2</span><span class="o">*</span><span class="n">Cp</span><span class="p">,</span><span class="n">m6</span><span class="o">*</span><span class="n">Cp</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="n">m2</span><span class="o">*</span><span class="n">Cp</span><span class="p">,</span><span class="o">-</span><span class="n">m3</span><span class="o">*</span><span class="n">Cp</span><span class="o">-</span><span class="n">m6</span><span class="o">*</span><span class="n">Cp</span><span class="p">,</span><span class="n">m5</span><span class="o">*</span><span class="n">Cp</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="n">m3</span><span class="o">*</span><span class="n">Cp</span><span class="p">,</span><span class="o">-</span><span class="n">m5</span><span class="o">*</span><span class="n">Cp</span><span class="o">-</span><span class="n">m4</span><span class="o">*</span><span class="n">Cp</span><span class="p">]])</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="n">m1</span><span class="o">*</span><span class="n">Cp</span><span class="o">*</span><span class="n">Tin</span><span class="p">,</span><span class="o">-</span><span class="n">Qin</span><span class="p">,</span><span class="o">-</span><span class="n">Qin</span><span class="p">])</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">b</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;T1: &quot;</span><span class="p">,</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;T2: &quot;</span><span class="p">,</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;T3: &quot;</span><span class="p">,</span><span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[14.5751634  13.7254902  16.66666667]
+T1:  14.575163398692812
+T2:  13.725490196078432
+T3:  16.666666666666668
+</pre></div>
+</div>
+</div>
+</div>
 <ol class="simple">
 <li><p>The <a class="reference external" href="https://en.wikipedia.org/wiki/Hilbert_matrix">Hilbert Matrix</a> has a high condition number and as the matrix increases dimensions, the condition number increases. Find the condition number of a</p></li>
 </ol>
@@ -1031,6 +1180,35 @@ m_{4}g \end{array} \right]\)</span></p>
 <p>d. <span class="math notranslate nohighlight">\(15 \times 15\)</span> Hilbert matrix</p>
 <p>e. <span class="math notranslate nohighlight">\(20 \times 20\)</span> Hilbert matrix</p>
 <p>If the accuracy of each matrix element is <span class="math notranslate nohighlight">\(\approx 10^{-16}\)</span>, what is the expected rounding error in the solution <span class="math notranslate nohighlight">\(\mathbf{Ax} = \mathbf{b}\)</span>, where <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is the Hilbert matrix.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">testVals</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">15</span><span class="p">,</span><span class="mi">20</span><span class="p">]</span>
+<span class="n">start</span> <span class="o">=</span> <span class="s2">&quot;A&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition Numbers&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">testVals</span><span class="p">:</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">Symbol</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">start</span><span class="p">,</span><span class="s2">&quot;. &quot;</span><span class="p">,</span> <span class="n">integrate</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">i</span><span class="o">-</span><span class="mi">2</span><span class="p">),(</span><span class="n">x</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)))</span>
+    <span class="n">start</span> <span class="o">=</span> <span class="nb">chr</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="n">start</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_1918</span><span class="o">/</span><span class="mf">2597907386.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> 
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">testVals</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">15</span><span class="p">,</span><span class="mi">20</span><span class="p">]</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="n">start</span> <span class="o">=</span> <span class="s2">&quot;A&quot;</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition Numbers&quot;</span><span class="p">)</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;sympy&#39;
+</pre></div>
+</div>
+</div>
+</div>
 </div>
 
     <script type="text/x-thebe-config">

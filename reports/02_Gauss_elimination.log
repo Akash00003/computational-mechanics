@@ -17,16 +17,23 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-Ay= np.array([[10,2,1,1],[2,1,1,1],[1,2,10,1]],dtype=float)
-AP([Ay],['[Ay]'])
+A = [[18,2],[-2,10]]
+LUNaive(A)
 ------------------
 
 [0;31m---------------------------------------------------------------------------[0m
-[0;31mNameError[0m                                 Traceback (most recent call last)
-[0;32m/tmp/ipykernel_1828/2021403389.py[0m in [0;36m<module>[0;34m[0m
-[1;32m      1[0m [0mAy[0m[0;34m=[0m [0mnp[0m[0;34m.[0m[0marray[0m[0;34m([0m[0;34m[[0m[0;34m[[0m[0;36m10[0m[0;34m,[0m[0;36m2[0m[0;34m,[0m[0;36m1[0m[0;34m,[0m[0;36m1[0m[0;34m][0m[0;34m,[0m[0;34m[[0m[0;36m2[0m[0;34m,[0m[0;36m1[0m[0;34m,[0m[0;36m1[0m[0;34m,[0m[0;36m1[0m[0;34m][0m[0;34m,[0m[0;34m[[0m[0;36m1[0m[0;34m,[0m[0;36m2[0m[0;34m,[0m[0;36m10[0m[0;34m,[0m[0;36m1[0m[0;34m][0m[0;34m][0m[0;34m,[0m[0mdtype[0m[0;34m=[0m[0mfloat[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
-[0;32m----> 2[0;31m [0mAP[0m[0;34m([0m[0;34m[[0m[0mAy[0m[0;34m][0m[0;34m,[0m[0;34m[[0m[0;34m'[Ay]'[0m[0;34m][0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0;31mAttributeError[0m                            Traceback (most recent call last)
+[0;32m/tmp/ipykernel_1938/2944131217.py[0m in [0;36m<module>[0;34m[0m
+[1;32m      1[0m [0mA[0m [0;34m=[0m [0;34m[[0m[0;34m[[0m[0;36m18[0m[0;34m,[0m[0;36m2[0m[0;34m][0m[0;34m,[0m[0;34m[[0m[0;34m-[0m[0;36m2[0m[0;34m,[0m[0;36m10[0m[0;34m][0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[0;32m----> 2[0;31m [0mLUNaive[0m[0;34m([0m[0mA[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
 [0m
-[0;31mNameError[0m: name 'AP' is not defined
-NameError: name 'AP' is not defined
+[0;32m/tmp/ipykernel_1938/41586813.py[0m in [0;36mLUNaive[0;34m(A)[0m
+[1;32m     17[0m     [0mnb[0m [0;34m=[0m [0mn[0m[0;34m+[0m[0;36m1[0m[0;34m[0m[0;34m[0m[0m
+[1;32m     18[0m     [0;31m# Gauss Elimination[0m[0;34m[0m[0;34m[0m[0;34m[0m[0m
+[0;32m---> 19[0;31m     [0mU[0m [0;34m=[0m [0mA[0m[0;34m.[0m[0mastype[0m[0;34m([0m[0mfloat[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m     20[0m     [0mL[0m [0;34m=[0m [0mnp[0m[0;34m.[0m[0meye[0m[0;34m([0m[0mn[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m     21[0m [0;34m[0m[0m
+
+[0;31mAttributeError[0m: 'list' object has no attribute 'astype'
+AttributeError: 'list' object has no attribute 'astype'
 
